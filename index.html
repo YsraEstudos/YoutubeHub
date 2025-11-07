@@ -29,94 +29,6 @@
       --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
       --transition-fast: 0.15s ease;
       --transition-normal: 0.25s ease;
-      --transition-slow: 0.4s ease;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(135deg, var(--background-color) 0%, #1a0a0a 100%);
-      color: var(--text-primary);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Scrollbar Personalizada */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--border-color);
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--secondary-color);
-    }
-
-    /* ===== Tela de Login ======================================================= */
-    .login-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background: radial-gradient(circle at 20% 50%, rgba(255,59,48,0.15) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 80%, rgba(33,150,243,0.1) 0%, transparent 50%),
-                  var(--background-color);
-    }
-
-    .login-box {
-      background: var(--surface-color);
-      padding: 48px;
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-lg);
-      width: 100%;
-      max-width: 420px;
-      animation: fadeInUp 0.5s ease;
-      border: 1px solid var(--border-color);
-    }
-
-    .login-box h2 {
-      font-size: 32px;
-      margin-bottom: 32px;
-      text-align: center;
-      background: linear-gradient(135deg, var(--primary-color), var(--info-color));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .login-form input {
-      width: 100%;
-      padding: 14px 16px;
-      margin-bottom: 16px;
-      background: var(--background-color);
-      border: 2px solid var(--border-color);
-      border-radius: var(--radius-md);
-      color: var(--text-primary);
-      font-size: 15px;
-      transition: var(--transition-fast);
-    }
-
-    .login-form input:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(255,59,48,0.1);
-    }
-
-    .login-form button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: var(--radius-md);
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
@@ -2919,37 +2831,46 @@
     }
 
     /* ===== Responsividade ====================================================== */
-    @media (max-width: 900px), (max-width: 1024px) and (orientation: portrait) {
+    /* Tablet e dispositivos de orientação vertical */
+    @media (max-width: 1024px), (orientation: portrait) {
       .header {
         flex-wrap: wrap;
-        gap: 12px;
-        align-items: flex-start;
+        gap: 8px;
+        padding: 12px 16px;
       }
 
       .logo {
         font-size: 20px;
-        gap: 10px;
+        gap: 8px;
+      }
+
+      .logo svg {
+        width: 28px;
+        height: 28px;
       }
 
       .header-actions {
         width: 100%;
-        justify-content: flex-end;
+        justify-content: space-between;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
+      }
+
+      .mobile-menu-toggle {
+        display: inline-flex;
+        order: 1;
       }
 
       .user-info {
         order: 2;
         padding: 6px 12px;
+        font-size: 13px;
       }
 
       .watch-queue-toggle {
         order: 3;
-      }
-
-      .mobile-menu-toggle {
-        display: inline-flex;
-        margin-left: auto;
+        flex: 1;
+        min-width: 180px;
       }
 
       #leftRevealZone {
@@ -2959,22 +2880,22 @@
       .container {
         flex-direction: column;
         height: auto;
-        min-height: calc(100vh - 65px);
+        min-height: calc(100vh - 80px);
       }
 
       .sidebar {
         position: fixed;
-        top: 72px;
+        top: 80px;
         left: 0;
-        height: calc(100vh - 72px);
+        height: calc(100vh - 80px);
         max-height: none;
-        width: min(80vw, 320px);
+        width: min(85vw, 340px);
         border-right: none;
-        border-bottom: 1px solid var(--border-color);
         box-shadow: var(--shadow-lg);
         transform: translateX(-105%);
         transition: transform var(--transition-normal);
         z-index: 2100;
+        overflow-y: auto;
       }
 
       body.mobile-sidebar-open .sidebar {
@@ -2982,7 +2903,7 @@
       }
 
       body.sidebar-collapsed .sidebar {
-        width: min(80vw, 320px);
+        width: min(85vw, 340px);
       }
 
       body.sidebar-collapsed .sidebar .sidebar-header,
@@ -2993,10 +2914,20 @@
 
       .main-content {
         flex: 1 1 auto;
+        width: 100%;
+      }
+
+      .content-header {
+        padding: 16px;
+      }
+
+      .content-title {
+        font-size: 22px;
+        margin-bottom: 12px;
       }
 
       .videos-container {
-        padding: 16px 16px 24px;
+        padding: 16px;
       }
 
       .controls {
@@ -3007,102 +2938,276 @@
       .search-box {
         flex: 1 1 100%;
         max-width: 100%;
+        order: 1;
+      }
+
+      .filter-select {
+        flex: 1;
+        min-width: 150px;
+        order: 2;
+      }
+
+      #addVideoBtn,
+      #importPlaylistBtn,
+      #categoryInfoBtn {
+        flex: 1;
+        min-width: 140px;
       }
 
       .videos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+      }
+
+      .video-thumbnail {
+        height: 160px;
       }
 
       .watch-queue-panel {
-        right: 16px;
-        width: min(90vw, 380px);
+        right: 10px;
+        left: 10px;
+        width: auto;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+
+      /* Melhorias nos cards de categoria */
+      .category-item {
+        margin-bottom: 10px;
+      }
+
+      .category-content {
+        padding: 16px 18px;
+      }
+
+      .category-name {
+        font-size: 16px;
+        max-width: 180px;
+      }
+
+      .subcategory-item .category-name {
+        max-width: 150px;
       }
     }
 
+    /* Smartphones em landscape e tablets pequenos */
     @media (max-width: 768px) {
+      .header {
+        padding: 10px 12px;
+      }
+
       .header-actions {
-        gap: 8px;
+        gap: 6px;
+      }
+
+      .btn-icon {
+        padding: 8px;
+        min-width: 36px;
+        min-height: 36px;
       }
 
       .watch-queue-toggle {
         width: 100%;
         justify-content: center;
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+
+      .sidebar {
+        width: min(90vw, 360px);
+        top: 72px;
+        height: calc(100vh - 72px);
+      }
+
+      .sidebar-header {
+        padding: 20px 16px;
+      }
+
+      .category-input-group {
+        gap: 8px;
+      }
+
+      .categories-container {
+        padding: 12px;
       }
 
       .videos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 14px;
+      }
+
+      .video-card {
+        border-radius: var(--radius-md);
+      }
+
+      .video-thumbnail {
+        height: 150px;
+      }
+
+      .video-info {
+        padding: 14px;
+      }
+
+      .video-title {
+        font-size: 15px;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
+
+      .video-actions-container {
+        gap: 6px;
+      }
+
+      .video-btn {
+        padding: 8px 10px;
+        font-size: 11px;
       }
 
       .modal-content {
         width: 95%;
+        border-radius: var(--radius-lg);
+      }
+
+      .modal-header {
+        padding: 20px;
+      }
+
+      .modal-title {
+        font-size: 20px;
+      }
+
+      .modal-body {
+        padding: 20px;
+      }
+
+      .modal-footer {
+        padding: 16px 20px;
+      }
+
+      /* Melhorias na fila de reprodução */
+      .watch-queue-panel {
+        right: 8px;
+        left: 8px;
+        width: auto;
+        top: 72px;
+        max-height: 75vh;
+      }
+
+      .queue-item {
+        padding: 10px 12px;
+      }
+
+      .queue-item-thumb {
+        width: 56px;
+        height: 32px;
+      }
+
+      .queue-item-title {
+        font-size: 13px;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
+
+      /* Player responsivo */
+      .video-player-content {
+        width: 96%;
+        max-height: 92vh;
+      }
+
+      .video-player-header {
+        padding: 16px;
+      }
+
+      .video-player-footer {
+        padding: 14px 16px;
+        gap: 12px;
+      }
+
+      /* Bulk actions mais compactas */
+      .bulk-actions-bar {
+        padding: 8px;
+        gap: 8px;
       }
     }
 
+    /* Smartphones em portrait */
     @media (max-width: 600px) {
+      body {
+        font-size: 14px;
+      }
+
       .header {
-        padding: 12px 16px;
+        padding: 10px 12px;
+        gap: 6px;
+      }
+
+      .logo {
+        font-size: 18px;
       }
 
       .logo svg {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
       }
 
       .header-actions {
         justify-content: center;
+        gap: 6px;
       }
 
       .user-info {
         order: 4;
         width: 100%;
         justify-content: center;
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .user-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
       }
 
       .watch-queue-toggle {
         order: 2;
         width: 100%;
         justify-content: center;
+        padding: 12px 16px;
+        font-size: 14px;
       }
 
-      .videos-container {
-        padding: 12px;
+      .btn {
+        padding: 10px 14px;
+        font-size: 13px;
       }
 
-      .videos-grid {
-        grid-template-columns: 1fr;
+      .btn-icon {
+        padding: 8px;
+        min-width: 38px;
+        min-height: 38px;
       }
 
-      .video-thumbnail {
-        height: 200px;
-      }
-
-      .video-actions-container {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-      }
-
-      .video-btn,
-      .watch-queue-toggle,
-      .player-action-btn,
-      .queue-btn,
-      .queue-action-btn {
+      /* Sidebar mobile */
+      .sidebar {
         width: 100%;
-        justify-content: center;
+        max-width: 100vw;
+        top: 68px;
+        height: calc(100vh - 68px);
+        border-radius: 0;
       }
 
-      .bulk-actions-bar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
+      .sidebar-header {
+        padding: 16px 12px;
       }
 
-      .bulk-actions-bar > * {
-        width: 100%;
+      .sidebar-title {
+        font-size: 14px;
       }
 
-      .bulk-actions-bar select {
-        width: 100%;
+      .category-input {
+        padding: 12px 14px;
+        font-size: 14px;
       }
 
       .category-input-group {
@@ -3112,71 +3217,1273 @@
 
       .category-input-group button {
         width: 100%;
+        padding: 12px 16px !important;
+        font-size: 15px;
       }
 
-      .modal-content {
+      .categories-container {
+        padding: 10px;
+      }
+
+      .category-item {
+        border-radius: 10px;
+        margin-bottom: 8px;
+      }
+
+      .category-content {
+        padding: 14px 12px;
+      }
+
+      .category-name {
+        font-size: 15px;
+        max-width: 160px;
+      }
+
+      .category-video-count {
+        font-size: 12px;
+      }
+
+      .category-duration {
+        padding: 4px 8px;
+        font-size: 11px;
+      }
+
+      .category-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+      }
+
+      .subcategory-item .category-name {
+        font-size: 14px;
+        max-width: 130px;
+      }
+
+      /* Conteúdo principal */
+      .content-header {
+        padding: 12px;
+      }
+
+      .content-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      .category-duration-display {
+        font-size: 13px;
+      }
+
+      .duration-value {
+        font-size: 12px;
+        padding: 3px 10px;
+      }
+
+      .controls {
+        gap: 8px;
+      }
+
+      .search-input {
+        padding: 10px 12px 10px 36px;
+        font-size: 14px;
+      }
+
+      .filter-select {
         width: 100%;
-        height: 100%;
-        max-height: 100vh;
-        border-radius: 0;
+        padding: 10px 12px;
+        font-size: 13px;
       }
 
-      .modal-header,
-      .modal-body,
-      .modal-footer {
-        padding-left: 16px;
-        padding-right: 16px;
-      }
-
-      .login-box {
-        padding: 32px 24px;
-      }
-
-      .watch-queue-panel {
-        right: 0;
-        left: 0;
-        margin: 0 auto;
+      #addVideoBtn,
+      #importPlaylistBtn,
+      #categoryInfoBtn {
         width: 100%;
-        top: 70px;
-        max-height: 80vh;
-        border-radius: 16px 16px 0 0;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header {
-        padding: 10px 14px;
-      }
-
-      .logo span {
-        font-size: 18px;
+        justify-content: center;
       }
 
       .videos-container {
-        padding: 12px 10px 20px;
+        padding: 10px;
+      }
+
+      .videos-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .video-card {
+        border-radius: 10px;
+      }
+
+      .video-thumbnail {
+        height: 200px;
+      }
+
+      .video-info {
+        padding: 12px;
       }
 
       .video-title {
-        font-size: 15px;
+        font-size: 14px;
+        margin-bottom: 6px;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
       }
 
       .video-meta {
         flex-direction: column;
         align-items: flex-start;
         gap: 6px;
+        font-size: 12px;
       }
 
-      .watch-queue-toggle {
+      .video-duration {
+        font-size: 11px;
+      }
+
+      .video-actions-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .video-btn,
+      .player-action-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 12px;
         font-size: 13px;
       }
 
+      .video-gear-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+      }
+
+      /* Bulk actions em coluna */
+      .bulk-actions-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 10px;
+      }
+
+      .bulk-actions-bar > * {
+        width: 100%;
+      }
+
+      .bulk-actions-bar select {
+        width: 100%;
+        min-width: 100%;
+      }
+
+      .bulk-actions-bar button {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Modais full screen em mobile */
+      .modal-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+        max-width: 100vw;
+      }
+
+      .modal-content.rules-modal {
+        max-width: 100vw;
+      }
+
+      .modal-header {
+        padding: 16px 14px;
+      }
+
+      .modal-title {
+        font-size: 18px;
+      }
+
+      .modal-body {
+        padding: 16px 14px;
+      }
+
+      .modal-footer {
+        padding: 14px;
+        gap: 8px;
+      }
+
+      .modal-footer button {
+        flex: 1;
+      }
+
+      .modal-input,
+      .modal-select {
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      /* Login box mobile */
       .login-box {
         padding: 28px 20px;
+        max-width: 100%;
+        margin: 16px;
+        border-radius: var(--radius-lg);
+      }
+
+      .login-box h2 {
+        font-size: 26px;
+        margin-bottom: 24px;
+      }
+
+      .login-form input {
+        padding: 12px 14px;
+        font-size: 14px;
       }
 
       .login-form button {
         font-size: 14px;
         padding: 12px;
+      }
+
+      .auth-links {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .link-btn {
+        font-size: 13px;
+        padding: 4px;
+      }
+
+      /* Fila de reprodução mobile */
+      .watch-queue-panel {
+        right: 0;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        top: 68px;
+        max-height: 80vh;
+        border-radius: 16px 16px 0 0;
+      }
+
+      .queue-header {
+        padding: 16px 14px 12px;
+      }
+
+      .queue-title {
+        font-size: 16px;
+      }
+
+      .queue-subtitle {
+        font-size: 12px;
+      }
+
+      .queue-controls {
+        gap: 6px;
+      }
+
+      .queue-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+        flex: 1;
+      }
+
+      .queue-item {
+        padding: 10px;
+        margin-bottom: 6px;
+      }
+
+      .queue-item-thumb {
+        width: 48px;
+        height: 27px;
+      }
+
+      .queue-item-title {
+        font-size: 13px;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
+
+      .queue-item-meta {
+        font-size: 11px;
+      }
+
+      .queue-action-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+      }
+
+      /* Player mobile */
+      .video-player-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+
+      .video-player-header {
+        padding: 12px;
+      }
+
+      .video-player-title {
+        font-size: 15px;
+      }
+
+      .video-player-close {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+      }
+
+      .video-player-footer {
+        padding: 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .video-player-actions {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .queue-info {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+        padding: 10px 12px;
+      }
+
+      .queue-status {
+        font-size: 12px;
+        justify-content: center;
+      }
+
+      .queue-actions {
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      /* Time calculator mobile */
+      .time-calculator-content {
+        gap: 16px;
+      }
+
+      .category-selection-section {
+        padding: 14px;
+      }
+
+      .section-title {
+        font-size: 15px;
+      }
+
+      .categories-checklist {
+        max-height: 180px;
+      }
+
+      .category-checkbox-item {
+        padding: 10px;
+      }
+
+      .category-name-text {
+        font-size: 13px;
+      }
+
+      .subcategory-checkbox-item .category-name-text {
+        font-size: 12px;
+      }
+
+      .total-display-value {
+        font-size: 24px;
+      }
+
+      .result-value {
+        font-size: 28px;
+      }
+
+      .additional-info {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      /* Empty state */
+      .empty-icon {
+        font-size: 56px;
+      }
+
+      .empty-title {
+        font-size: 20px;
+      }
+
+      .empty-description {
+        font-size: 14px;
+        padding: 0 10px;
+      }
+
+      /* Toast notifications mobile */
+      .toast-container {
+        top: 70px;
+        right: 10px;
+        left: 10px;
+      }
+
+      .toast {
+        min-width: auto;
+        width: 100%;
+        padding: 12px 16px;
+      }
+
+      /* Context menu mobile */
+      .context-menu {
+        min-width: 200px;
+        max-width: 90vw;
+      }
+
+      .context-menu-item {
+        padding: 12px 14px;
+        font-size: 14px;
+        min-height: 42px;
+      }
+
+      /* Stats grid mobile */
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .stat-card {
+        padding: 16px;
+      }
+
+      .stat-value {
+        font-size: 28px;
+      }
+
+      .stat-label {
+        font-size: 13px;
+      }
+    }
+
+    /* Smartphones muito pequenos */
+    @media (max-width: 480px) {
+      .header {
+        padding: 8px 10px;
+      }
+
+      .logo {
+        font-size: 16px;
+      }
+
+      .logo span {
+        display: none;
+      }
+
+      .logo svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .btn {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+
+      .btn-icon {
+        padding: 6px;
+        min-width: 34px;
+        min-height: 34px;
+      }
+
+      .mobile-menu-toggle {
+        font-size: 18px;
+      }
+
+      .user-avatar {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+      }
+
+      .user-info {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+
+      .watch-queue-toggle {
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+
+      /* Sidebar extra compacta */
+      .sidebar {
+        top: 64px;
+        height: calc(100vh - 64px);
+      }
+
+      .sidebar-header {
+        padding: 14px 10px;
+      }
+
+      .sidebar-title {
+        font-size: 13px;
+        margin-bottom: 16px;
+      }
+
+      .category-input {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+
+      .category-input-group button {
+        padding: 10px 14px !important;
+        font-size: 14px;
+      }
+
+      .categories-container {
+        padding: 8px;
+      }
+
+      .category-item {
+        border-radius: 8px;
+        margin-bottom: 6px;
+      }
+
+      .category-content {
+        padding: 12px 10px;
+      }
+
+      .category-name {
+        font-size: 14px;
+        max-width: 140px;
+      }
+
+      .category-video-count {
+        font-size: 11px;
+      }
+
+      .category-duration {
+        padding: 3px 6px;
+        font-size: 10px;
+      }
+
+      .category-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+      }
+
+      .subcategory-item .category-name {
+        font-size: 13px;
+        max-width: 110px;
+      }
+
+      .sidebar-footer {
+        padding: 8px 12px;
+      }
+
+      .total-summary {
+        font-size: 11px;
+      }
+
+      .total-duration {
+        font-size: 11px;
+        padding: 3px 6px;
+      }
+
+      /* Conteúdo principal compacto */
+      .content-header {
+        padding: 10px;
+      }
+
+      .content-title {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+
+      .category-duration-display {
+        font-size: 12px;
+      }
+
+      .duration-label {
+        font-size: 11px;
+      }
+
+      .duration-value {
+        font-size: 11px;
+        padding: 2px 8px;
+      }
+
+      .controls {
+        gap: 6px;
+      }
+
+      .search-input {
+        padding: 9px 11px 9px 34px;
+        font-size: 13px;
+      }
+
+      .search-icon {
+        left: 12px;
+        font-size: 14px;
+      }
+
+      .filter-select {
+        padding: 9px 11px;
+        font-size: 12px;
+      }
+
+      .videos-container {
+        padding: 8px;
+      }
+
+      .videos-grid {
+        gap: 10px;
+      }
+
+      .video-card {
+        border-radius: 8px;
+      }
+
+      .video-thumbnail {
+        height: 180px;
+      }
+
+      .video-info {
+        padding: 10px;
+      }
+
+      .video-title {
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+
+      .video-meta {
+        font-size: 11px;
+        gap: 5px;
+      }
+
+      .video-channel {
+        font-size: 11px;
+      }
+
+      .video-duration {
+        font-size: 10px;
+        padding: 2px 5px;
+      }
+
+      .video-actions-container {
+        gap: 6px;
+      }
+
+      .video-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+
+      .video-gear-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+      }
+
+      .video-status {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        top: 8px;
+        right: 8px;
+      }
+
+      .video-annotations-indicator {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        top: 8px;
+        right: 40px;
+      }
+
+      /* Bulk actions compactas */
+      .bulk-actions-bar {
+        padding: 8px;
+        gap: 6px;
+      }
+
+      .bulk-count {
+        font-size: 12px;
+      }
+
+      /* Modais */
+      .modal-header {
+        padding: 14px 12px;
+      }
+
+      .modal-title {
+        font-size: 17px;
+      }
+
+      .modal-body {
+        padding: 14px 12px;
+      }
+
+      .modal-footer {
+        padding: 12px;
+        gap: 6px;
+      }
+
+      .modal-input,
+      .modal-select {
+        padding: 10px 11px;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+
+      .modal-label {
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+
+      /* Login */
+      .login-box {
+        padding: 24px 16px;
+        margin: 12px;
+        border-radius: var(--radius-md);
+      }
+
+      .login-box h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .login-form input {
+        padding: 11px 12px;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+
+      .login-form button {
+        font-size: 13px;
+        padding: 11px;
+      }
+
+      .auth-links {
+        gap: 6px;
+        margin-top: 10px;
+      }
+
+      .link-btn {
+        font-size: 12px;
+      }
+
+      .form-feedback {
+        font-size: 12px;
+        margin-top: 10px;
+      }
+
+      /* Fila de reprodução */
+      .watch-queue-panel {
+        top: 64px;
+        max-height: 75vh;
+      }
+
+      .queue-header {
+        padding: 14px 12px 10px;
+      }
+
+      .queue-title {
+        font-size: 15px;
+      }
+
+      .queue-subtitle {
+        font-size: 11px;
+        margin-bottom: 12px;
+      }
+
+      .queue-controls {
+        gap: 4px;
+      }
+
+      .queue-btn {
+        padding: 5px 8px;
+        font-size: 10px;
+      }
+
+      .queue-content {
+        padding: 6px 0;
+      }
+
+      .queue-list {
+        padding: 0 10px;
+      }
+
+      .queue-item {
+        padding: 8px;
+        margin-bottom: 5px;
+        border-radius: 8px;
+      }
+
+      .queue-item-thumb {
+        width: 44px;
+        height: 25px;
+        margin-right: 10px;
+      }
+
+      .queue-item-title {
+        font-size: 12px;
+      }
+
+      .queue-item-meta {
+        font-size: 10px;
+      }
+
+      .queue-item-duration {
+        font-size: 10px;
+        padding: 2px 5px;
+      }
+
+      .queue-action-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+      }
+
+      .queue-empty {
+        padding: 40px 16px;
+      }
+
+      .queue-empty-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+
+      .queue-empty-message {
+        font-size: 16px;
+      }
+
+      .queue-empty-subtitle {
+        font-size: 13px;
+      }
+
+      /* Player */
+      .video-player-header {
+        padding: 10px;
+      }
+
+      .video-player-title {
+        font-size: 14px;
+      }
+
+      .video-player-close {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+      }
+
+      .video-player-footer {
+        padding: 10px;
+        gap: 8px;
+      }
+
+      .video-player-actions {
+        gap: 6px;
+      }
+
+      .player-action-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+
+      .queue-info {
+        padding: 8px 10px;
+      }
+
+      .queue-status {
+        font-size: 11px;
+      }
+
+      /* Time calculator */
+      .category-selection-section {
+        padding: 12px;
+      }
+
+      .section-title {
+        font-size: 14px;
+      }
+
+      .control-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+
+      .categories-checklist {
+        max-height: 160px;
+      }
+
+      .category-checkbox-item {
+        padding: 8px;
+      }
+
+      .category-checkbox {
+        width: 16px;
+        height: 16px;
+      }
+
+      .category-checkbox::after {
+        font-size: 11px;
+      }
+
+      .category-name-text {
+        font-size: 12px;
+      }
+
+      .category-meta-text {
+        font-size: 11px;
+      }
+
+      .subcategory-checkbox-item .category-name-text {
+        font-size: 11px;
+      }
+
+      .current-total-info {
+        padding: 16px;
+      }
+
+      .total-display-label {
+        font-size: 13px;
+      }
+
+      .total-display-value {
+        font-size: 22px;
+      }
+
+      .total-subtitle {
+        font-size: 11px;
+      }
+
+      .time-input {
+        max-width: 120px;
+      }
+
+      .quick-day-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+
+      .result-card {
+        padding: 16px;
+        gap: 12px;
+      }
+
+      .result-icon {
+        font-size: 28px;
+      }
+
+      .result-title {
+        font-size: 13px;
+      }
+
+      .result-value {
+        font-size: 24px;
+      }
+
+      .result-subtitle {
+        font-size: 12px;
+      }
+
+      .info-item {
+        padding: 10px;
+      }
+
+      .info-label {
+        font-size: 11px;
+      }
+
+      .info-value {
+        font-size: 14px;
+      }
+
+      /* Empty state */
+      .empty-state {
+        padding: 40px 16px;
+      }
+
+      .empty-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+
+      .empty-title {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      .empty-description {
+        font-size: 13px;
+      }
+
+      /* Toast */
+      .toast-container {
+        top: 66px;
+        right: 8px;
+        left: 8px;
+      }
+
+      .toast {
+        padding: 10px 14px;
+        min-width: auto;
+        font-size: 13px;
+      }
+
+      .toast-icon {
+        font-size: 16px;
+      }
+
+      /* Context menu */
+      .context-menu {
+        min-width: 180px;
+      }
+
+      .context-menu-header {
+        padding: 10px 12px 6px;
+      }
+
+      .context-menu-title {
+        font-size: 12px;
+      }
+
+      .context-menu-subtitle {
+        font-size: 10px;
+      }
+
+      .context-menu-item {
+        padding: 10px 12px;
+        font-size: 13px;
+        min-height: 38px;
+      }
+
+      .context-menu-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 13px;
+      }
+
+      /* Stats */
+      .stats-grid {
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 14px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+        margin-bottom: 6px;
+      }
+
+      .stat-label {
+        font-size: 12px;
+      }
+
+      /* Annotations modal */
+      .annotations-video-info {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .annotations-video-thumb {
+        width: 64px;
+        height: 36px;
+      }
+
+      .annotations-video-title {
+        font-size: 14px;
+      }
+
+      .annotations-video-channel {
+        font-size: 12px;
+      }
+
+      .annotations-textarea {
+        min-height: 160px;
+        font-size: 13px;
+      }
+
+      .annotations-meta {
+        padding: 10px;
+        font-size: 11px;
+      }
+
+      /* Move video modal */
+      .move-video-info {
+        flex-direction: column;
+        padding: 12px 0;
+      }
+
+      .move-video-preview {
+        width: 100%;
+      }
+
+      .move-video-thumb {
+        width: 64px;
+        height: 36px;
+      }
+
+      .move-video-title {
+        font-size: 13px;
+      }
+
+      .move-video-current {
+        font-size: 11px;
+      }
+
+      .move-video-arrow {
+        font-size: 20px;
+        transform: rotate(90deg);
+      }
+
+      .move-video-target {
+        width: 100%;
+      }
+
+      .move-video-target-info {
+        padding: 10px;
+      }
+
+      .move-video-target-name {
+        font-size: 13px;
+      }
+
+      .move-video-target-count {
+        font-size: 11px;
+      }
+
+      /* Gear dropdown */
+      .video-gear-dropdown {
+        min-width: 180px;
+      }
+
+      .video-gear-dropdown-item {
+        padding: 10px 12px;
+        font-size: 12px;
+        gap: 10px;
+      }
+
+      .video-gear-dropdown-icon {
+        font-size: 14px;
+        width: 18px;
+      }
+    }
+
+    /* Ajustes para landscape em smartphones pequenos */
+    @media (max-width: 900px) and (orientation: landscape) {
+      .header {
+        padding: 8px 12px;
+      }
+
+      .sidebar {
+        width: min(65vw, 280px);
+        top: 60px;
+        height: calc(100vh - 60px);
+      }
+
+      .videos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      }
+
+      .video-thumbnail {
+        height: 140px;
+      }
+
+      .watch-queue-panel {
+        top: 60px;
+        max-height: 70vh;
+        max-width: 360px;
+      }
+
+      .modal-content {
+        max-height: 95vh;
+      }
+
+      .video-player-content {
+        max-height: 95vh;
+      }
+    }
+
+    /* Melhorias para telas de alta densidade (Retina) */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .video-thumbnail,
+      .queue-item-thumb,
+      .annotations-video-thumb,
+      .move-video-thumb {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+      }
+
+      .btn,
+      .video-btn,
+      .category-btn {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    }
+
+    /* Modo escuro forçado do sistema */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+      }
+    }
+
+    /* Preferências de movimento reduzido */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .spinner {
+        animation: none;
+        border: 3px solid var(--primary-color);
+      }
+    }
+
+    /* Melhorias para toque */
+    @media (hover: none) and (pointer: coarse) {
+      .btn,
+      .video-btn,
+      .category-btn,
+      .video-gear-btn,
+      .queue-btn,
+      .player-action-btn,
+      .control-btn,
+      .quick-day-btn,
+      .queue-action-btn,
+      .context-menu-item,
+      .video-gear-dropdown-item {
+        min-height: 44px;
+        min-width: 44px;
+      }
+
+      .category-item,
+      .video-card,
+      .queue-item {
+        cursor: default;
+      }
+
+      .category-actions {
+        opacity: 1;
+      }
+
+      .queue-item-actions {
+        opacity: 1;
+      }
+
+      .video-context-hint {
+        opacity: 0;
       }
     }
   </style>
@@ -3860,93 +5167,6 @@ FirebaseApp.initializeApp(options);</pre>
         <div class="queue-empty-subtitle">Adicione vídeos à fila usando o menu de engrenagem dos vídeos para criar sua lista de reprodução personalizada</div>
       </div>
       <div class="queue-list" id="queueList"></div>
-    </div>
-  </div>
-
-  <!-- Modal Estatísticas da Categoria -->
-  <div id="statsModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">Estatísticas da Categoria</h2>
-      </div>
-      <div class="modal-body">
-        <div id="statsGrid" class="stats-grid"></div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" onclick="app.closeModal('statsModal')">Fechar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Calculadora de Tempo -->
-  <div id="timeCalculatorModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">Planejar Tempo</h2>
-      </div>
-      <div class="modal-body">
-        <div class="calculator-layout" style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
-          <!-- Coluna esquerda: checklist -->
-          <div class="categories-checklist" style="flex:1 1 360px; min-width:300px; max-height:360px; overflow:auto; border:1px solid var(--border-color); border-radius: var(--radius-md); padding:12px; background: var(--background-color);">
-            <div class="section-title" style="font-weight:600; margin-bottom:8px;">📂 Escolha as Categorias</div>
-            <div id="categoriesChecklist"></div>
-          </div>
-          <!-- Coluna direita: resumo e metas -->
-          <div class="calculator-summary" style="flex:1 1 320px; min-width:280px; display:flex; flex-direction:column; gap:12px;">
-            <div class="current-total-info" style="border:1px solid var(--border-color); border-radius: var(--radius-md); padding:12px; background: var(--background-color);">
-              <div style="font-size:12px; color: var(--text-secondary); margin-bottom:6px;">Duração total (não assistidos)</div>
-              <div class="total-display" style="display:flex; align-items:baseline; gap:8px;">
-                <div id="calculatorTotalTime" style="font-size:24px; font-weight:700;">00:00</div>
-              </div>
-            </div>
-            <div class="target-input" style="border:1px solid var(--border-color); border-radius: var(--radius-md); padding:12px; background: var(--background-color); display:flex; align-items:center; gap:12px;">
-              <label for="targetDaysInput" class="modal-label" style="margin:0;">Em quantos dias quer concluir?</label>
-              <input type="number" id="targetDaysInput" class="modal-input" placeholder="Ex: 7" min="1" style="max-width:120px;" oninput="app.calculateDailyTime()"/>
-              <div style="display:flex; gap:6px; margin-left:auto;">
-                <button class="btn btn-secondary" onclick="app.setTargetDays(7)">7</button>
-                <button class="btn btn-secondary" onclick="app.setTargetDays(14)">14</button>
-                <button class="btn btn-secondary" onclick="app.setTargetDays(30)">30</button>
-              </div>
-            </div>
-            <div id="calculationResult" style="display:none;">
-              <div class="result-card" style="border:1px solid var(--border-color); border-radius: var(--radius-md); padding:12px; background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(34,197,94,0.08)); display:flex; gap:12px; align-items:center;">
-                <div class="result-icon" style="font-size:20px;">⏱️</div>
-                <div class="result-content" style="display:flex; flex-direction:column; gap:4px;">
-                  <div class="result-title" style="font-weight:600;">Tempo por dia</div>
-                  <div style="display:flex; gap:16px; flex-wrap:wrap;">
-                    <div><span style="color:var(--text-secondary)">Diário:</span> <span id="dailyTimeResult" style="font-weight:600;">00:00</span></div>
-                    <div><span style="color:var(--text-secondary)">Semanal:</span> <span id="weeklyTimeResult" style="font-weight:600;">00:00</span></div>
-                  </div>
-                  <div class="result-subtitle" style="color: var(--text-secondary); font-size:12px;">
-                    Em <span id="resultDays">0</span> dias • Conclusão em <span id="completionDate">--/--/----</span> • <span id="selectedCategoriesCount">0 categorias</span> • <span id="remainingVideosCount">0 vídeos</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="app.selectAllCategories(false)">Limpar seleção</button>
-        <button class="btn" onclick="app.selectAllCategories(true)">Selecionar todas</button>
-        <button class="btn" onclick="app.closeModal('timeCalculatorModal')">Fechar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal de Confirmação Genérico -->
-  <div id="confirmModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="confirmTitle">Confirmar</h2>
-      </div>
-      <div class="modal-body">
-        <p id="confirmMessage">Tem certeza?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="app.closeModal('confirmModal')">Cancelar</button>
-        <button class="btn" id="confirmButton">Confirmar</button>
-      </div>
     </div>
   </div>
 
