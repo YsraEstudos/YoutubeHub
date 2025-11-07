@@ -145,6 +145,56 @@
       background: var(--surface-hover);
     }
 
+    .auth-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      color: var(--info-color);
+      cursor: pointer;
+      font-size: 13px;
+      padding: 0;
+      text-decoration: underline;
+      transition: color var(--transition-fast);
+    }
+
+    .link-btn:hover {
+      color: var(--primary-color);
+    }
+
+    .form-feedback {
+      margin-top: 12px;
+      min-height: 18px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .form-feedback.error { color: var(--error-color); }
+    .form-feedback.success { color: var(--success-color); }
+    .form-feedback.info { color: var(--info-color); }
+
+    .rules-section {
+      margin-bottom: 20px;
+    }
+
+    .rules-block {
+      background: var(--background-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
     /* ===== Header ============================================================== */
     .header {
       position: sticky;
@@ -1402,6 +1452,10 @@
       overflow-y: auto;
       animation: slideInUp var(--transition-normal);
       border: 1px solid var(--border-color);
+    }
+
+    .modal-content.rules-modal {
+      max-width: 780px;
     }
 
     .modal-header {
@@ -2890,10 +2944,16 @@
     <div class="login-box">
       <h2>🎬 YouTube Hub</h2>
       <form class="login-form" id="loginForm">
-        <input type="text" id="username" placeholder="Nome de usuário" required autocomplete="username"/>
-        <input type="password" id="password" placeholder="Senha (opcional)" autocomplete="current-password"/>
-        <button type="submit">Entrar</button>
+        <input type="email" id="loginEmail" placeholder="E-mail" required autocomplete="email"/>
+        <input type="password" id="loginPassword" placeholder="Senha" required autocomplete="current-password"/>
+        <button type="submit" id="loginSubmitBtn">Entrar</button>
         <button type="button" class="guest-btn" onclick="app.loginAsGuest()">Entrar como Convidado</button>
+        <div class="auth-links">
+          <button type="button" class="link-btn" id="openRegisterModal">Criar conta</button>
+          <button type="button" class="link-btn" id="openPasswordResetModal">Esqueci minha senha</button>
+          <button type="button" class="link-btn" id="openRulesModal">Regras do site</button>
+        </div>
+        <p class="form-feedback" id="loginMessage"></p>
       </form>
     </div>
   </div>
@@ -3018,6 +3078,182 @@
   </div>
 
   <!-- Modais -->
+  <!-- Modal Criar Conta -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Criar Conta</h2>
+      </div>
+      <form class="modal-body" id="registerForm">
+        <label class="modal-label" for="registerDisplayName">Nome completo</label>
+        <input type="text" class="modal-input" id="registerDisplayName" placeholder="Como podemos chamar você?" autocomplete="name"/>
+
+        <label class="modal-label" for="registerEmail">E-mail</label>
+        <input type="email" class="modal-input" id="registerEmail" placeholder="voce@exemplo.com" required autocomplete="email"/>
+
+        <label class="modal-label" for="registerPassword">Senha</label>
+        <input type="password" class="modal-input" id="registerPassword" placeholder="Mínimo 6 caracteres" required autocomplete="new-password"/>
+
+        <label class="modal-label" for="registerPasswordConfirm">Confirmar senha</label>
+        <input type="password" class="modal-input" id="registerPasswordConfirm" placeholder="Repita a senha" required autocomplete="new-password"/>
+
+        <p class="form-feedback" id="registerMessage"></p>
+      </form>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" onclick="app.closeModal('registerModal')">Cancelar</button>
+        <button class="btn" type="submit" form="registerForm" id="registerSubmitBtn">Criar conta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Recuperar Senha -->
+  <div id="passwordResetModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Recuperar Senha</h2>
+      </div>
+      <form class="modal-body" id="passwordResetForm">
+        <label class="modal-label" for="resetEmail">E-mail cadastrado</label>
+        <input type="email" class="modal-input" id="resetEmail" placeholder="voce@exemplo.com" required autocomplete="email"/>
+        <p class="form-feedback" id="resetMessage"></p>
+      </form>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" onclick="app.closeModal('passwordResetModal')">Cancelar</button>
+        <button class="btn" type="submit" form="passwordResetForm" id="resetSubmitBtn">Enviar link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Regras do Site -->
+  <div id="rulesModal" class="modal">
+    <div class="modal-content rules-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Regras oficiais do YouTube Hub</h2>
+      </div>
+      <div class="modal-body">
+        <div class="rules-section">
+          <h3>Firebase Firestore</h3>
+          <pre class="rules-block">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- RegBasicra 1: Perfis de Usuário ('users') ---
+    // Cada usuário tem um documento na coleção 'users'
+    // O ID do documento é o UID de autenticação do usuário
+    match /users/{userId} {
+      // Qualquer usuário logado pode ler o perfil de outro (para ver nome, foto, etc.)
+      allow read: if request.auth != null;
+      
+      // Apenas o PRÓPRIO usuário pode criar ou atualizar seu perfil
+      // (Verifica se o UID do logado é o mesmo do documento que ele quer mudar)
+      allow write: if request.auth.uid == userId;
+    }
+
+    // --- Regra 2: Conteúdo Público (Ex: 'posts', 'produtos', 'artigos') ---
+    // Uma coleção pública que todos podem ver
+    match /posts/{postId} {
+      
+      // Qualquer pessoa (logada ou não) pode ler
+      allow read: if true;
+      
+      // Apenas usuários logados podem CRIAR
+      allow create: if request.auth != null;
+      
+      // Apenas o AUTOR original pode ATUALIZAR ou DELETAR
+      // (IMPORTANTE: Veja a explicação abaixo!)
+      allow update, delete: if request.auth.uid == resource.data.authorId;
+    }
+
+    // --- Regra 3: Dados Privados do Usuário (Ex: 'notas', 'carrinho') ---
+    // Este padrão usa uma subcoleção dentro do documento do usuário
+    // Ex: /users/{userId}/privateNotes/{noteId}
+    match /users/{userId}/privateNotes/{noteId} {
+      
+      // Apenas o usuário "dono" (cujo ID está no caminho) pode ler ou escrever
+      // Ninguém mais pode ver esses dados.
+      allow read, write: if request.auth.uid == userId;
+    }
+  }
+}</pre>
+        </div>
+        <div class="rules-section">
+          <h3>Firebase Storage (Modo Produção)</h3>
+          <pre class="rules-block">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Regra para a coleção 'users'
+    // Ela diz: "Qualquer usuário logado pode ler um perfil,
+    // mas SÓ O PRÓPRIO DONO pode escrever (atualizar) seu perfil."
+
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth.uid == userId;
+    }
+
+    // Lembre-se: Como você iniciou em "Modo de Produção",
+    // todas as outras coleções estão bloqueadas por padrão.
+    // Você terá que adicionar regras para 'posts', 'produtos', etc.,
+    // da mesma forma que fizemos acima.
+  }
+}</pre>
+        </div>
+        <div class="rules-section">
+          <h3>Mensagens automáticas de e-mail</h3>
+          <h4>Verificação de endereço de e-mail</h4>
+          <pre class="rules-block">De: noreply@hub-7e5ae.firebaseapp.com
+Responder para: noreply
+Assunto: Verify your email for %APP_NAME%
+
+Hello %DISPLAY_NAME%,
+Follow this link to verify your email address.
+https://hub-7e5ae.firebaseapp.com/__/auth/action?mode=action&oobCode=code
+If you didn’t ask to verify this address, you can ignore this email.
+Thanks,
+Your %APP_NAME% team</pre>
+
+          <h4>Redefinição de senha</h4>
+          <pre class="rules-block">De: noreply@hub-7e5ae.firebaseapp.com
+Responder para: noreply
+Assunto: Reset your password for %APP_NAME%
+
+Hello,
+Follow this link to reset your %APP_NAME% password for your %EMAIL% account.
+https://hub-7e5ae.firebaseapp.com/__/auth/action?mode=action&oobCode=code
+If you didn’t ask to reset your password, you can ignore this email.
+Thanks,
+Your %APP_NAME% team</pre>
+
+          <h4>Alteração de endereço de e-mail</h4>
+          <pre class="rules-block">De: noreply@hub-7e5ae.firebaseapp.com
+Responder para: noreply
+Assunto: Your sign-in email was changed for %APP_NAME%
+
+Hello %DISPLAY_NAME%,
+Your sign-in email for %APP_NAME% was changed to %NEW_EMAIL%.
+If you didn’t ask to change your email, follow this link to reset your sign-in email.
+https://hub-7e5ae.firebaseapp.com/__/auth/action?mode=action&oobCode=code
+Thanks,
+Your %APP_NAME% team</pre>
+        </div>
+        <div class="rules-section">
+          <h3>SDK Admin - inicialização segura</h3>
+          <pre class="rules-block">FileInputStream serviceAccount =
+new FileInputStream("path/to/serviceAccountKey.json");
+
+FirebaseOptions options = new FirebaseOptions.Builder()
+  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+  .build();
+
+FirebaseApp.initializeApp(options);</pre>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" type="button" onclick="app.closeModal('rulesModal')">Fechar</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal Adicionar Vídeo -->
   <div id="addVideoModal" class="modal">
     <div class="modal-content">
@@ -3518,8 +3754,49 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js';
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      sendEmailVerification,
+      sendPasswordResetEmail,
+      signOut,
+      updateProfile
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      serverTimestamp
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
     'use strict';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCuCAiBD-fSjwQ90a-aNNeOBMmg60I7P8c",
+      authDomain: "hub-7e5ae.firebaseapp.com",
+      projectId: "hub-7e5ae",
+      storageBucket: "hub-7e5ae.firebasestorage.app",
+      messagingSenderId: "422827291513",
+      appId: "1:422827291513:web:4a8f84b1d2fd9fb12775a8",
+      measurementId: "G-NCSJM87T8H"
+    };
+
+    const firebaseApp = initializeApp(firebaseConfig);
+    let analytics;
+    try {
+      analytics = getAnalytics(firebaseApp);
+    } catch (error) {
+      console.warn('Firebase Analytics indisponível neste ambiente.', error);
+    }
+
+    const auth = getAuth(firebaseApp);
+    const db = getFirestore(firebaseApp);
 
     /**
      * YouTube Hub - Sistema de Gerenciamento de Vídeos
@@ -3534,6 +3811,10 @@
      */
 
     const app = {
+      firebaseApp,
+      auth,
+      db,
+      analytics,
       // Estado da aplicação
       currentUser: null,
       categories: [],
@@ -3556,25 +3837,71 @@
       // Menu de engrenagem
       gearMenuClickHandler: null,
       gearMenuKeyHandler: null,
+  isRemoteSyncing: false,
 
       /**
        * Inicialização da aplicação
        */
       init() {
-        this.loadData();
         this.setupEventListeners();
-        if (this.currentUser) this.showMainApp();
+        this.loadGuestSnapshot();
+        onAuthStateChanged(this.auth, async (user) => {
+          await this.handleAuthState(user);
+        });
       },
 
       /**
        * Configura event listeners globais
        */
       setupEventListeners() {
-        // Form de login
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-          e.preventDefault();
-          this.login();
-        });
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+          loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.login();
+          });
+        }
+
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+          registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.registerAccount();
+          });
+        }
+
+        const passwordResetForm = document.getElementById('passwordResetForm');
+        if (passwordResetForm) {
+          passwordResetForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.sendPasswordReset();
+          });
+        }
+
+        const openRegisterBtn = document.getElementById('openRegisterModal');
+        if (openRegisterBtn) {
+          openRegisterBtn.addEventListener('click', () => {
+            registerForm?.reset();
+            this.resetFormFeedback('registerMessage');
+            this.openModal('registerModal');
+          });
+        }
+
+        const openResetBtn = document.getElementById('openPasswordResetModal');
+        if (openResetBtn) {
+          openResetBtn.addEventListener('click', () => {
+            passwordResetForm?.reset();
+            this.resetFormFeedback('resetMessage');
+            this.openModal('passwordResetModal');
+          });
+        }
+
+        const openRulesBtn = document.getElementById('openRulesModal');
+        if (openRulesBtn) {
+          openRulesBtn.addEventListener('click', () => {
+            this.openModal('rulesModal');
+          });
+        }
 
         // Atalhos de teclado
         document.addEventListener('keydown', (e) => {
@@ -3623,42 +3950,299 @@
         }
       },
 
+      async handleAuthState(user) {
+        if (user) {
+          const username = user.displayName || (user.email ? user.email.split('@')[0] : 'Usuário');
+          this.currentUser = {
+            uid: user.uid,
+            email: user.email,
+            username,
+            type: 'firebase',
+            emailVerified: user.emailVerified
+          };
+
+          await this.ensureUserProfile(user, username);
+          await this.loadRemoteState();
+          this.showMainApp();
+
+          if (!user.emailVerified) {
+            this.showToast('Seu e-mail ainda não foi verificado. Confira sua caixa de entrada.', 'warning');
+          }
+        } else {
+          if (this.currentUser?.type === 'firebase') {
+            this.resetAppState();
+          }
+          this.currentUser = null;
+          this.loadGuestSnapshot();
+          if (this.currentUser?.type === 'guest') {
+            this.showMainApp();
+            if ((this.categories || []).length > 0) {
+              this.showToast('Modo convidado carregado a partir deste dispositivo.', 'info');
+            }
+          } else {
+            this.showLoginScreen();
+          }
+        }
+      },
+
       /**
        * Sistema de Autenticação
        */
-      login() {
-        const username = document.getElementById('username').value.trim();
-        if (username) {
-          this.currentUser = { username, type: 'authenticated' };
-          this.saveData();
-          this.showMainApp();
-          this.showToast(`Bem-vindo, ${username}!`, 'success');
+      async login() {
+        const email = document.getElementById('loginEmail')?.value.trim();
+        const password = document.getElementById('loginPassword')?.value || '';
+        this.resetFormFeedback('loginMessage');
+
+        if (!email || !password) {
+          this.setFormFeedback('loginMessage', 'Informe e-mail e senha válidos.', 'error');
+          return;
+        }
+
+        const submitBtn = document.getElementById('loginSubmitBtn');
+        this.setButtonLoading(submitBtn, true, 'Entrando...');
+
+        try {
+          await signInWithEmailAndPassword(this.auth, email, password);
+          this.setFormFeedback('loginMessage', 'Login realizado com sucesso!', 'success');
+        } catch (error) {
+          console.error('Erro ao entrar:', error);
+          this.setFormFeedback('loginMessage', this.translateAuthError(error.code), 'error');
+        } finally {
+          this.setButtonLoading(submitBtn, false);
+          const passwordField = document.getElementById('loginPassword');
+          if (passwordField) passwordField.value = '';
         }
       },
 
       loginAsGuest() {
         this.currentUser = { username: 'Convidado', type: 'guest' };
+        this.resetFormFeedback('loginMessage');
+        this.loadGuestSnapshot();
         this.saveData();
         this.showMainApp();
         this.showToast('Entrando como convidado', 'info');
       },
 
       logout() {
-        this.confirmAction('Sair', 'Tem certeza que deseja sair?', () => {
+        this.confirmAction('Sair', 'Tem certeza que deseja sair?', async () => {
+          try {
+            if (this.currentUser?.type === 'firebase') {
+              await signOut(this.auth);
+            }
+          } catch (error) {
+            console.error('Erro ao sair da conta:', error);
+            this.showToast('Não foi possível encerrar a sessão. Tente novamente.', 'error');
+            return;
+          }
+
           this.currentUser = null;
           this.currentCategory = null;
-          this.saveData();
-          document.getElementById('loginScreen').style.display = 'flex';
-          document.getElementById('mainApp').style.display = 'none';
+          this.resetAppState();
+          this.showLoginScreen();
           this.showToast('Logout realizado', 'success');
         });
       },
 
+      async registerAccount() {
+        const displayName = document.getElementById('registerDisplayName')?.value.trim() || '';
+        const email = document.getElementById('registerEmail')?.value.trim() || '';
+        const password = document.getElementById('registerPassword')?.value || '';
+        const confirm = document.getElementById('registerPasswordConfirm')?.value || '';
+
+        this.resetFormFeedback('registerMessage');
+
+        if (!email || !password) {
+          this.setFormFeedback('registerMessage', 'Informe um e-mail válido e uma senha.', 'error');
+          return;
+        }
+
+        if (password.length < 6) {
+          this.setFormFeedback('registerMessage', 'A senha deve ter pelo menos 6 caracteres.', 'error');
+          return;
+        }
+
+        if (password !== confirm) {
+          this.setFormFeedback('registerMessage', 'As senhas não coincidem.', 'error');
+          return;
+        }
+
+        const submitBtn = document.getElementById('registerSubmitBtn');
+        this.setButtonLoading(submitBtn, true, 'Criando conta...');
+
+        try {
+          const credentials = await createUserWithEmailAndPassword(this.auth, email, password);
+          if (displayName) {
+            await updateProfile(credentials.user, { displayName });
+          }
+          await this.ensureUserProfile(credentials.user, displayName || email.split('@')[0]);
+          await sendEmailVerification(credentials.user);
+          this.showToast('Conta criada! Enviamos um e-mail de verificação.', 'success');
+          this.closeModal('registerModal');
+          document.getElementById('registerForm')?.reset();
+        } catch (error) {
+          console.error('Erro ao registrar usuário:', error);
+          this.setFormFeedback('registerMessage', this.translateAuthError(error.code), 'error');
+        } finally {
+          this.setButtonLoading(submitBtn, false);
+        }
+      },
+
+      async sendPasswordReset() {
+        const email = document.getElementById('resetEmail')?.value.trim() || '';
+        this.resetFormFeedback('resetMessage');
+
+        if (!email) {
+          this.setFormFeedback('resetMessage', 'Informe o e-mail utilizado no cadastro.', 'error');
+          return;
+        }
+
+        const submitBtn = document.getElementById('resetSubmitBtn');
+        this.setButtonLoading(submitBtn, true, 'Enviando...');
+
+        try {
+          await sendPasswordResetEmail(this.auth, email);
+          this.setFormFeedback('resetMessage', 'Enviamos um e-mail com instruções para redefinir sua senha.', 'success');
+        } catch (error) {
+          console.error('Erro ao solicitar redefinição de senha:', error);
+          this.setFormFeedback('resetMessage', this.translateAuthError(error.code), 'error');
+        } finally {
+          this.setButtonLoading(submitBtn, false);
+        }
+      },
+
+      setButtonLoading(button, loading, loadingText = 'Processando...') {
+        if (!button) return;
+        if (loading) {
+          if (!button.dataset.originalText) {
+            button.dataset.originalText = button.textContent;
+          }
+          button.textContent = loadingText;
+          button.disabled = true;
+        } else {
+          if (button.dataset.originalText) {
+            button.textContent = button.dataset.originalText;
+            delete button.dataset.originalText;
+          }
+          button.disabled = false;
+        }
+      },
+
+      setFormFeedback(elementId, message, type = 'info') {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        el.textContent = message;
+        el.className = `form-feedback ${type}`;
+      },
+
+      resetFormFeedback(elementId) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        el.textContent = '';
+        el.className = 'form-feedback';
+      },
+
+      translateAuthError(code = '') {
+        const messages = {
+          'auth/invalid-email': 'E-mail inválido.',
+          'auth/user-disabled': 'Conta desativada.',
+          'auth/user-not-found': 'Usuário não encontrado.',
+          'auth/wrong-password': 'Senha incorreta.',
+          'auth/email-already-in-use': 'Este e-mail já está em uso.',
+          'auth/weak-password': 'A senha deve ter pelo menos 6 caracteres.',
+          'auth/too-many-requests': 'Muitas tentativas. Aguarde e tente novamente.',
+          'auth/network-request-failed': 'Falha de rede. Verifique sua conexão.'
+        };
+        return messages[code] || 'Ocorreu um erro inesperado. Tente novamente.';
+      },
+
+      async ensureUserProfile(user, username) {
+        if (!user) return;
+        try {
+          await setDoc(doc(this.db, 'users', user.uid), {
+            email: user.email,
+            displayName: username || '',
+            emailVerified: user.emailVerified,
+            updatedAt: serverTimestamp()
+          }, { merge: true });
+        } catch (error) {
+          console.error('Erro ao sincronizar perfil do usuário:', error);
+        }
+      },
+
+      async loadRemoteState() {
+        if (!this.currentUser?.uid) return;
+        this.isRemoteSyncing = true;
+        try {
+          const stateRef = doc(this.db, 'users', this.currentUser.uid, 'privateNotes', 'hubState');
+          const snapshot = await getDoc(stateRef);
+          if (snapshot.exists()) {
+            const data = snapshot.data();
+            this.categories = data.categories || [];
+            this.settings = data.settings || {};
+            this.uiState = data.uiState || { search: '', filter: 'all', globalSearch: false };
+            this._watchQueue = data.watchQueue || [];
+            this._selectedVideos = new Set(data.selectedVideos || []);
+            this.currentCategory = null;
+            if (data.currentCategoryId) {
+              this.currentCategory = this.findCategoryById(data.currentCategoryId);
+            }
+          } else {
+            this.categories = [];
+            this.settings = { youtubeApiKey: '' };
+            this.uiState = { search: '', filter: 'all', globalSearch: false };
+            this._watchQueue = [];
+            this._selectedVideos = new Set();
+            this.currentCategory = null;
+          }
+
+          this.renderCategories();
+          this.renderVideos();
+          this.updateTotalDuration();
+          this.updateQueueBadge();
+        } catch (error) {
+          console.error('Erro ao carregar dados do Firestore:', error);
+          this.showToast('Não foi possível carregar seus dados na nuvem.', 'error');
+        } finally {
+          this.isRemoteSyncing = false;
+        }
+      },
+
+      showLoginScreen() {
+        const loginScreen = document.getElementById('loginScreen');
+        const mainApp = document.getElementById('mainApp');
+        if (loginScreen) loginScreen.style.display = 'flex';
+        if (mainApp) mainApp.style.display = 'none';
+        const form = document.getElementById('loginForm');
+        if (form) form.reset();
+        this.resetFormFeedback('loginMessage');
+      },
+
+      resetAppState() {
+        this.categories = [];
+        this.currentCategory = null;
+        this._watchQueue = [];
+        this._selectedVideos = new Set();
+        this.renderCategories();
+        this.renderVideos();
+        this.updateTotalDuration();
+        this.updateQueueBadge();
+        const durationDisplay = document.getElementById('categoryDurationDisplay');
+        if (durationDisplay) durationDisplay.style.display = 'none';
+        document.body.classList.remove('sidebar-collapsed', 'sidebar-reveal');
+      },
+
       showMainApp() {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('mainApp').style.display = 'block';
-        document.getElementById('userName').textContent = this.currentUser.username;
-        document.getElementById('userAvatar').textContent = this.currentUser.username[0].toUpperCase();
+        const loginScreen = document.getElementById('loginScreen');
+        const mainApp = document.getElementById('mainApp');
+        if (loginScreen) loginScreen.style.display = 'none';
+        if (mainApp) mainApp.style.display = 'block';
+
+        const username = this.currentUser?.username || 'Usuário';
+        const userNameEl = document.getElementById('userName');
+        const userAvatarEl = document.getElementById('userAvatar');
+        if (userNameEl) userNameEl.textContent = username;
+        if (userAvatarEl) userAvatarEl.textContent = username.charAt(0).toUpperCase();
+
         this.renderCategories();
         this.updateTotalDuration();
         this.updateQueueBadge();
@@ -6552,8 +7136,8 @@
        * Persistência de Dados
        */
       saveData() {
-        const data = {
-          currentUser: this.currentUser,
+        const baseData = {
+          currentUser: this.currentUser?.type === 'guest' ? this.currentUser : null,
           categories: this.categories,
           currentCategoryId: this.currentCategory?.id || null,
           settings: this.settings,
@@ -6561,38 +7145,57 @@
           selectedVideos: Array.from(this._selectedVideos || []),
           watchQueue: this._watchQueue || []
         };
-        
-        localStorage.setItem('youtubeHubData', JSON.stringify(data));
+
+        localStorage.setItem('youtubeHubData', JSON.stringify(baseData));
+
+        if (this.currentUser?.type === 'firebase' && this.currentUser.uid && !this.isRemoteSyncing) {
+          const stateRef = doc(this.db, 'users', this.currentUser.uid, 'privateNotes', 'hubState');
+          const remotePayload = {
+            categories: baseData.categories,
+            currentCategoryId: baseData.currentCategoryId,
+            settings: baseData.settings,
+            uiState: baseData.uiState,
+            watchQueue: baseData.watchQueue,
+            selectedVideos: baseData.selectedVideos,
+            updatedAt: serverTimestamp()
+          };
+
+          setDoc(stateRef, remotePayload, { merge: true }).catch((error) => {
+            console.error('Erro ao salvar dados na nuvem:', error);
+          });
+        }
       },
 
-      loadData() {
+      loadGuestSnapshot() {
         const stored = localStorage.getItem('youtubeHubData');
         if (!stored) return;
 
         try {
           const data = JSON.parse(stored);
-          this.currentUser = data.currentUser || null;
+          if (this.currentUser?.type === 'firebase') return;
+
+          if (data.currentUser?.type === 'guest') {
+            this.currentUser = data.currentUser;
+          }
+
           this.categories = data.categories || [];
           this.settings = data.settings || {};
-          this.uiState = data.uiState || { search: '', filter: 'all' };
+          this.uiState = data.uiState || { search: '', filter: 'all', globalSearch: false };
           this._selectedVideos = new Set(data.selectedVideos || []);
           this._watchQueue = data.watchQueue || [];
-          
+
           if (data.currentCategoryId) {
-            this.currentCategory = this.findCategoryById(data.currentCategoryId);
+            this.currentCategory = this.findCategoryById(data.currentCategoryId) || null;
+          } else {
+            this.currentCategory = null;
           }
-          
-          // Atualiza o badge da fila se houver dados carregados
-          if (this.currentUser) {
-            this.updateQueueBadge();
-          }
-          // Se houver seleção salva de outra categoria, limpe ao carregar a UI
-          // Garantimos consistência ao chamar updateBulkActionsBar após render.
         } catch (error) {
-          console.error('Erro ao carregar dados:', error);
+          console.error('Erro ao carregar dados locais:', error);
         }
       }
     };
+
+    window.app = app;
 
     // Inicializa a aplicação
     window.addEventListener('DOMContentLoaded', () => app.init());
