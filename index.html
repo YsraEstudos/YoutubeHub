@@ -289,6 +289,31 @@
       transform: none;
     }
 
+    .mobile-menu-toggle {
+      display: none;
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity var(--transition-normal);
+      z-index: 2000;
+    }
+
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    body.mobile-sidebar-open {
+      overflow: hidden;
+    }
+
     /* ===== Layout Principal ==================================================== */
     .container {
       display: flex;
@@ -2894,13 +2919,118 @@
     }
 
     /* ===== Responsividade ====================================================== */
-    @media (max-width: 768px) {
+    @media (max-width: 900px), (max-width: 1024px) and (orientation: portrait) {
+      .header {
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .logo {
+        font-size: 20px;
+        gap: 10px;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .user-info {
+        order: 2;
+        padding: 6px 12px;
+      }
+
+      .watch-queue-toggle {
+        order: 3;
+      }
+
+      .mobile-menu-toggle {
+        display: inline-flex;
+        margin-left: auto;
+      }
+
+      #leftRevealZone {
+        display: none;
+      }
+
+      .container {
+        flex-direction: column;
+        height: auto;
+        min-height: calc(100vh - 65px);
+      }
+
       .sidebar {
-        width: 240px;
+        position: fixed;
+        top: 72px;
+        left: 0;
+        height: calc(100vh - 72px);
+        max-height: none;
+        width: min(80vw, 320px);
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: var(--shadow-lg);
+        transform: translateX(-105%);
+        transition: transform var(--transition-normal);
+        z-index: 2100;
+      }
+
+      body.mobile-sidebar-open .sidebar {
+        transform: translateX(0);
+      }
+
+      body.sidebar-collapsed .sidebar {
+        width: min(80vw, 320px);
+      }
+
+      body.sidebar-collapsed .sidebar .sidebar-header,
+      body.sidebar-collapsed .sidebar .categories-container {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .main-content {
+        flex: 1 1 auto;
+      }
+
+      .videos-container {
+        padding: 16px 16px 24px;
+      }
+
+      .controls {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .search-box {
+        flex: 1 1 100%;
+        max-width: 100%;
       }
 
       .videos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      }
+
+      .watch-queue-panel {
+        right: 16px;
+        width: min(90vw, 380px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-actions {
+        gap: 8px;
+      }
+
+      .watch-queue-toggle {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .videos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       }
 
       .modal-content {
@@ -2909,35 +3039,152 @@
     }
 
     @media (max-width: 600px) {
-      .container {
-        flex-direction: column;
+      .header {
+        padding: 12px 16px;
       }
 
-      .sidebar {
+      .logo svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .header-actions {
+        justify-content: center;
+      }
+
+      .user-info {
+        order: 4;
         width: 100%;
-        max-height: 300px;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
+        justify-content: center;
+      }
+
+      .watch-queue-toggle {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .videos-container {
+        padding: 12px;
       }
 
       .videos-grid {
         grid-template-columns: 1fr;
       }
 
-      .controls {
+      .video-thumbnail {
+        height: 200px;
+      }
+
+      .video-actions-container {
         flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
       }
 
-      .search-box {
-        max-width: 100%;
+      .video-btn,
+      .watch-queue-toggle,
+      .player-action-btn,
+      .queue-btn,
+      .queue-action-btn {
+        width: 100%;
+        justify-content: center;
       }
 
+      .bulk-actions-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .bulk-actions-bar > * {
+        width: 100%;
+      }
+
+      .bulk-actions-bar select {
+        width: 100%;
+      }
+
+      .category-input-group {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .category-input-group button {
+        width: 100%;
+      }
+
+      .modal-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+
+      .modal-header,
+      .modal-body,
+      .modal-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .login-box {
+        padding: 32px 24px;
+      }
+
+      .watch-queue-panel {
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        width: 100%;
+        top: 70px;
+        max-height: 80vh;
+        border-radius: 16px 16px 0 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 10px 14px;
+      }
+
+      .logo span {
+        font-size: 18px;
+      }
+
+      .videos-container {
+        padding: 12px 10px 20px;
+      }
+
+      .video-title {
+        font-size: 15px;
+      }
+
+      .video-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .watch-queue-toggle {
+        font-size: 13px;
+      }
+
+      .login-box {
+        padding: 28px 20px;
+      }
+
+      .login-form button {
+        font-size: 14px;
+        padding: 12px;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Left edge reveal zone to bring back the sidebar when collapsed -->
   <div id="leftRevealZone"></div>
+  <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
 
   <!-- Tela de Login -->
   <div id="loginScreen" class="login-container">
@@ -2967,6 +3214,9 @@
         </svg>
         <span>YouTube Hub</span>
       </div>
+      <button class="btn btn-icon mobile-menu-toggle" id="mobileSidebarToggle" aria-label="Abrir menu de categorias" title="Categorias">
+        ☰
+      </button>
       <div class="header-actions">
         <button class="btn btn-icon" onclick="app.showImportExportModal()" title="Importar/Exportar">
           📦
@@ -3837,7 +4087,9 @@ FirebaseApp.initializeApp(options);</pre>
       // Menu de engrenagem
       gearMenuClickHandler: null,
       gearMenuKeyHandler: null,
-  isRemoteSyncing: false,
+    isRemoteSyncing: false,
+    _mobileSidebarKeyHandler: null,
+    _responsiveResizeHandler: null,
 
       /**
        * Inicialização da aplicação
@@ -3947,6 +4199,85 @@ FirebaseApp.initializeApp(options);</pre>
               document.body.classList.remove('sidebar-reveal');
             }
           });
+        }
+
+        const mobileToggle = document.getElementById('mobileSidebarToggle');
+        if (mobileToggle) {
+          mobileToggle.addEventListener('click', () => this.toggleMobileSidebar());
+        }
+
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        if (sidebarOverlay) {
+          sidebarOverlay.addEventListener('click', () => this.closeMobileSidebar());
+        }
+
+        if (!this._responsiveResizeHandler) {
+          this._responsiveResizeHandler = () => this.enforceResponsiveState();
+        }
+
+        window.addEventListener('resize', this._responsiveResizeHandler);
+        window.addEventListener('orientationchange', this._responsiveResizeHandler);
+
+        this.enforceResponsiveState();
+      },
+
+      isMobileLayout() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const isPortrait = height > width;
+        return width <= 900 || (isPortrait && width <= 1024);
+      },
+
+      toggleMobileSidebar(forceOpen) {
+        const body = document.body;
+        const canOpen = this.isMobileLayout();
+        const isOpen = body.classList.contains('mobile-sidebar-open');
+
+        if (!canOpen && forceOpen !== false) {
+          return;
+        }
+
+        const shouldOpen = forceOpen !== undefined ? forceOpen : !isOpen;
+
+        body.classList.toggle('mobile-sidebar-open', shouldOpen);
+
+        const overlay = document.getElementById('sidebarOverlay');
+        if (overlay) {
+          overlay.classList.toggle('active', shouldOpen);
+        }
+
+        if (shouldOpen) {
+          if (!this._mobileSidebarKeyHandler) {
+            this._mobileSidebarKeyHandler = (event) => {
+              if (event.key === 'Escape') {
+                this.closeMobileSidebar();
+              }
+            };
+          }
+          document.addEventListener('keydown', this._mobileSidebarKeyHandler);
+        } else if (this._mobileSidebarKeyHandler) {
+          document.removeEventListener('keydown', this._mobileSidebarKeyHandler);
+          this._mobileSidebarKeyHandler = null;
+        }
+      },
+
+      closeMobileSidebar() {
+        document.body.classList.remove('mobile-sidebar-open');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (overlay) {
+          overlay.classList.remove('active');
+        }
+        if (this._mobileSidebarKeyHandler) {
+          document.removeEventListener('keydown', this._mobileSidebarKeyHandler);
+          this._mobileSidebarKeyHandler = null;
+        }
+      },
+
+      enforceResponsiveState() {
+        if (this.isMobileLayout()) {
+          document.body.classList.remove('sidebar-collapsed');
+        } else {
+          this.closeMobileSidebar();
         }
       },
 
@@ -4228,6 +4559,7 @@ FirebaseApp.initializeApp(options);</pre>
         this.updateQueueBadge();
         const durationDisplay = document.getElementById('categoryDurationDisplay');
         if (durationDisplay) durationDisplay.style.display = 'none';
+        this.closeMobileSidebar();
         document.body.classList.remove('sidebar-collapsed', 'sidebar-reveal');
       },
 
@@ -4243,12 +4575,12 @@ FirebaseApp.initializeApp(options);</pre>
         if (userNameEl) userNameEl.textContent = username;
         if (userAvatarEl) userAvatarEl.textContent = username.charAt(0).toUpperCase();
 
-        this.renderCategories();
-        this.updateTotalDuration();
-        this.updateQueueBadge();
-  // Atualiza durações de vídeos antigos que não possuem duração salva (assíncrono)
-  // Não bloqueia a UI; mostrará progresso se houver vídeos pendentes.
-  this.backfillMissingDurations();
+    this.renderCategories();
+    this.updateTotalDuration();
+    this.updateQueueBadge();
+    // Atualiza durações de vídeos antigos que não possuem duração salva (assíncrono)
+    // Não bloqueia a UI; mostrará progresso se houver vídeos pendentes.
+    this.backfillMissingDurations();
       },
 
       /**
@@ -4299,9 +4631,14 @@ FirebaseApp.initializeApp(options);</pre>
 
       selectCategory(categoryId) {
         this.currentCategory = this.findCategoryById(categoryId);
-  // Limpa seleção ao trocar de categoria
-  this._selectedVideos.clear();
-  this.updateBulkActionsBar();
+
+        // Limpa seleção ao trocar de categoria
+        this._selectedVideos.clear();
+        this.updateBulkActionsBar();
+
+        const body = document.body;
+        const isMobile = this.isMobileLayout();
+
         this.renderCategories();
         this.renderVideos();
         
@@ -4318,17 +4655,24 @@ FirebaseApp.initializeApp(options);</pre>
           const duration = this.formatDuration(this.currentCategory.totalDuration || 0);
           durationValue.textContent = duration;
           durationDisplay.style.display = 'flex';
-        } else {
+        } else if (durationDisplay) {
           durationDisplay.style.display = 'none';
         }
 
-        // Ao selecionar uma categoria, colapsa a sidebar para dar mais espaço aos vídeos
         if (hasCategory) {
-          document.body.classList.add('sidebar-collapsed');
-          document.body.classList.remove('sidebar-reveal');
+          if (isMobile) {
+            this.closeMobileSidebar();
+            body.classList.remove('sidebar-collapsed');
+          } else {
+            body.classList.add('sidebar-collapsed');
+            body.classList.remove('sidebar-reveal');
+          }
         } else {
-          document.body.classList.remove('sidebar-collapsed');
-          document.body.classList.remove('sidebar-reveal');
+          body.classList.remove('sidebar-collapsed');
+          body.classList.remove('sidebar-reveal');
+          if (isMobile) {
+            this.closeMobileSidebar();
+          }
         }
       },
 
@@ -4962,8 +5306,8 @@ FirebaseApp.initializeApp(options);</pre>
           return;
         }
 
-  const grid = document.createElement('div');
-        grid.className = 'videos-grid';
+    const grid = document.createElement('div');
+    grid.className = 'videos-grid';
 
         const sortedVideos = [...this.currentCategory.videos].sort((a, b) => a.order - b.order);
 
@@ -4974,13 +5318,17 @@ FirebaseApp.initializeApp(options);</pre>
 
         container.innerHTML = '';
 
-  // Colapsa sidebar ao interagir com a área de vídeos (foco no conteúdo)
-  document.body.classList.add('sidebar-collapsed');
-  document.body.classList.remove('sidebar-reveal');
+        if (!this.isMobileLayout()) {
+          document.body.classList.add('sidebar-collapsed');
+          document.body.classList.remove('sidebar-reveal');
+        } else {
+          document.body.classList.remove('sidebar-collapsed');
+        }
+
         container.appendChild(grid);
 
-  // Atualiza barra de bulk e filtros
-  this.updateBulkActionsBar();
+        // Atualiza barra de bulk e filtros
+        this.updateBulkActionsBar();
         this.filterVideos();
       },
 
