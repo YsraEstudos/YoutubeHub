@@ -84,10 +84,174 @@
       height: auto;
     }
 
+    .login-container {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 24px;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at 15% 20%, rgba(255, 59, 48, 0.16), transparent 60%),
+        radial-gradient(circle at 80% 0%, rgba(33, 150, 243, 0.12), transparent 65%),
+        var(--background-color);
+    }
+
+    .login-container::before,
+    .login-container::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.6;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .login-container::before {
+      width: 420px;
+      height: 420px;
+      background: rgba(255, 59, 48, 0.25);
+      top: -140px;
+      right: -80px;
+    }
+
+    .login-container::after {
+      width: 320px;
+      height: 320px;
+      background: rgba(33, 150, 243, 0.25);
+      bottom: -120px;
+      left: -40px;
+    }
+
+    .login-box {
+      width: min(460px, 100%);
+      padding: 48px;
+      background: rgba(10, 10, 10, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(20px);
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .login-logo {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 12px 25px rgba(255, 59, 48, 0.35);
+    }
+
+    .brand-eyebrow {
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      color: var(--text-secondary);
+      margin: 0 0 4px;
+    }
+
+    .login-title {
+      margin: 0;
+      font-size: 34px;
+      letter-spacing: -0.5px;
+    }
+
+    .login-subtitle {
+      margin: 16px 0 0;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      transition: border var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .input-wrapper:focus-within {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 1px rgba(255, 59, 48, 0.3), 0 8px 20px rgba(255, 59, 48, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .input-icon {
+      font-size: 18px;
+      opacity: 0.8;
+    }
+
+    .input-field {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-size: 15px;
+    }
+
+    .input-field::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .input-field:focus {
+      outline: none;
+    }
+
+    .login-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
     .login-form button[type="submit"] {
+      height: 52px;
+      border-radius: var(--radius-lg);
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
       background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-      color: white;
-      margin-bottom: 12px;
+      color: #fff;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
     }
 
     .login-form button[type="submit"]:hover {
@@ -96,42 +260,78 @@
     }
 
     .guest-btn {
-      background: var(--secondary-color);
-      color: white;
+      height: 52px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: transparent;
+      color: var(--text-primary);
+      font-weight: 600;
+      cursor: pointer;
+      transition: border var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
     }
 
     .guest-btn:hover {
-      background: var(--surface-hover);
+      border-color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .login-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0 4px;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .login-divider::before,
+    .login-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
     }
 
     .auth-links {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 10px;
-      justify-content: center;
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     .link-btn {
-      background: none;
-      border: none;
-      color: var(--info-color);
-      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-secondary);
+      padding: 10px 14px;
       font-size: 13px;
-      padding: 0;
-      text-decoration: underline;
-      transition: color var(--transition-fast);
+      font-weight: 500;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: color var(--transition-fast), border var(--transition-fast), background var(--transition-fast);
+    }
+
+    .link-btn span[aria-hidden="true"] {
+      font-size: 16px;
     }
 
     .link-btn:hover {
       color: var(--primary-color);
+      border-color: var(--primary-color);
+      background: rgba(255, 59, 48, 0.08);
     }
 
     .form-feedback {
-      margin-top: 12px;
       min-height: 18px;
       font-size: 13px;
-      text-align: center;
+      margin-top: -6px;
+      color: var(--text-secondary);
     }
 
     .form-feedback.error {
@@ -3567,36 +3767,57 @@
       }
 
       /* Login box mobile */
+      .login-container {
+        padding: 48px 18px;
+      }
+
       .login-box {
-        padding: 28px 20px;
+        padding: 36px 24px;
         max-width: 100%;
-        margin: 16px;
-        border-radius: var(--radius-lg);
+        margin: 0;
       }
 
-      .login-box h2 {
-        font-size: 26px;
-        margin-bottom: 24px;
+      .login-brand {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
       }
 
-      .login-form input {
+      .login-logo {
+        width: 48px;
+        height: 48px;
+      }
+
+      .login-title {
+        font-size: 28px;
+      }
+
+      .login-subtitle {
+        font-size: 14px;
+      }
+
+      .input-wrapper {
         padding: 12px 14px;
-        font-size: 14px;
       }
 
-      .login-form button {
-        font-size: 14px;
-        padding: 12px;
+      .login-actions button,
+      .guest-btn {
+        height: 48px;
+        font-size: 15px;
+      }
+
+      .login-divider {
+        margin: 14px 0 0;
       }
 
       .auth-links {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         gap: 8px;
       }
 
       .link-btn {
         font-size: 13px;
-        padding: 4px;
+        padding: 10px 12px;
       }
 
       /* Fila de reprodução mobile */
@@ -4088,40 +4309,56 @@
       }
 
       /* Login */
+      .login-container {
+        padding: 36px 14px;
+      }
+
       .login-box {
-        padding: 24px 16px;
+        padding: 28px 18px;
         margin: 12px;
-        border-radius: var(--radius-md);
+        border-radius: var(--radius-lg);
       }
 
-      .login-box h2 {
+      .login-logo {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+      }
+
+      .login-title {
         font-size: 24px;
-        margin-bottom: 20px;
       }
 
-      .login-form input {
+      .login-subtitle {
+        font-size: 13px;
+      }
+
+      .input-label {
+        font-size: 13px;
+      }
+
+      .input-wrapper {
         padding: 11px 12px;
-        font-size: 13px;
-        margin-bottom: 12px;
       }
 
-      .login-form button {
-        font-size: 13px;
-        padding: 11px;
+      .login-actions button,
+      .guest-btn {
+        font-size: 14px;
+        height: 46px;
       }
 
       .auth-links {
         gap: 6px;
-        margin-top: 10px;
       }
 
       .link-btn {
         font-size: 12px;
+        padding: 9px 12px;
       }
 
       .form-feedback {
         font-size: 12px;
-        margin-top: 10px;
+        margin-top: 0;
       }
 
       /* Fila de reprodução */
@@ -4645,19 +4882,50 @@
 
   <!-- Tela de Login -->
   <div id="loginScreen" class="login-container">
-    <div class="login-box">
-      <h2>🎬 YouTube Hub</h2>
-      <form class="login-form" id="loginForm">
-        <input type="email" id="loginEmail" placeholder="E-mail" required autocomplete="email" />
-        <input type="password" id="loginPassword" placeholder="Senha" required autocomplete="current-password" />
-        <button type="submit" id="loginSubmitBtn">Entrar</button>
-        <button type="button" class="guest-btn" onclick="app.loginAsGuest()">Entrar como Convidado</button>
-        <div class="auth-links">
-          <button type="button" class="link-btn" id="openRegisterModal">Criar conta</button>
-          <button type="button" class="link-btn" id="openPasswordResetModal">Esqueci minha senha</button>
-          <button type="button" class="link-btn" id="openRulesModal">Regras do site</button>
+    <div class="login-box" role="region" aria-labelledby="loginTitle">
+      <div class="login-brand">
+        <div class="login-logo" aria-hidden="true">▶️</div>
+        <div>
+          <p class="brand-eyebrow">Bem-vindo ao</p>
+          <h1 class="login-title" id="loginTitle">YouTube Hub</h1>
         </div>
-        <p class="form-feedback" id="loginMessage"></p>
+      </div>
+      <p class="login-subtitle">Organize playlists, acompanhe estudos e mantenha todos os vídeos importantes em um só lugar.</p>
+      <form class="login-form" id="loginForm">
+        <div class="input-group">
+          <label class="input-label" for="loginEmail">E-mail</label>
+          <div class="input-wrapper">
+            <span class="input-icon" aria-hidden="true">📧</span>
+            <input type="email" class="input-field" id="loginEmail" placeholder="voce@exemplo.com" required autocomplete="email" />
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="loginPassword">Senha</label>
+          <div class="input-wrapper">
+            <span class="input-icon" aria-hidden="true">🔒</span>
+            <input type="password" class="input-field" id="loginPassword" placeholder="Digite sua senha" required autocomplete="current-password" />
+          </div>
+        </div>
+        <p class="form-feedback" id="loginMessage" aria-live="polite"></p>
+        <div class="login-actions">
+          <button type="submit" id="loginSubmitBtn">Entrar</button>
+          <button type="button" class="guest-btn" onclick="app.loginAsGuest()">Entrar como convidado</button>
+        </div>
+        <div class="login-divider"><span>atalhos rápidos</span></div>
+        <div class="auth-links" role="navigation" aria-label="Ações adicionais">
+          <button type="button" class="link-btn" id="openRegisterModal">
+            <span aria-hidden="true">✨</span>
+            Criar conta
+          </button>
+          <button type="button" class="link-btn" id="openPasswordResetModal">
+            <span aria-hidden="true">🔑</span>
+            Esqueci minha senha
+          </button>
+          <button type="button" class="link-btn" id="openRulesModal">
+            <span aria-hidden="true">📜</span>
+            Regras do site
+          </button>
+        </div>
       </form>
     </div>
   </div>
