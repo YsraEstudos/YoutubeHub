@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="version" content="1.0" />
   <title>YouTube Hub Pessoal</title>
   <style>
     /* ===== Variáveis de Tema e Reset Global ==================================== */
@@ -24,9 +26,9 @@
       --radius-md: 10px;
       --radius-lg: 14px;
       --radius-xl: 20px;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-      --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
-      --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
       --transition-fast: 0.15s ease;
       --transition-normal: 0.25s ease;
     }
@@ -54,8 +56,8 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  overflow-x: hidden;
+      touch-action: manipulation;
+      overflow-x: hidden;
     }
 
     a {
@@ -132,9 +134,17 @@
       text-align: center;
     }
 
-    .form-feedback.error { color: var(--error-color); }
-    .form-feedback.success { color: var(--success-color); }
-    .form-feedback.info { color: var(--info-color); }
+    .form-feedback.error {
+      color: var(--error-color);
+    }
+
+    .form-feedback.success {
+      color: var(--success-color);
+    }
+
+    .form-feedback.info {
+      color: var(--info-color);
+    }
 
     .rules-section {
       margin-bottom: 20px;
@@ -161,7 +171,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 16px 24px;
-      background: rgba(26,26,26,0.95);
+      background: rgba(26, 26, 26, 0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-color);
     }
@@ -255,7 +265,7 @@
     .sidebar-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.55);
+      background: rgba(0, 0, 0, 0.55);
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
@@ -303,21 +313,36 @@
       pointer-events: auto;
     }
 
-    .sidebar-header, .categories-container { transition: opacity 0.2s ease; }
+    .sidebar-header,
+    .categories-container {
+      transition: opacity 0.2s ease;
+    }
 
-    body.sidebar-collapsed .sidebar { width: 14px; }
+    body.sidebar-collapsed .sidebar {
+      width: 14px;
+    }
+
     body.sidebar-collapsed .sidebar .sidebar-header,
-    body.sidebar-collapsed .sidebar .categories-container { opacity: 0; pointer-events: none; }
+    body.sidebar-collapsed .sidebar .categories-container {
+      opacity: 0;
+      pointer-events: none;
+    }
 
     /* When revealing via left edge or hovering the sidebar, expand back */
-    body.sidebar-reveal .sidebar { width: 360px; }
+    body.sidebar-reveal .sidebar {
+      width: 360px;
+    }
+
     body.sidebar-reveal .sidebar .sidebar-header,
-    body.sidebar-reveal .sidebar .categories-container { opacity: 1; pointer-events: auto; }
+    body.sidebar-reveal .sidebar .categories-container {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     .sidebar-header {
       padding: 28px 24px;
       border-bottom: 1px solid var(--border-color);
-      background: linear-gradient(135deg, var(--surface-color) 0%, rgba(255,59,48,0.02) 100%);
+      background: linear-gradient(135deg, var(--surface-color) 0%, rgba(255, 59, 48, 0.02) 100%);
       position: relative;
       overflow: hidden;
     }
@@ -353,7 +378,7 @@
       font-size: 12px;
       padding: 4px 8px;
       border-radius: 6px;
-      background-color: rgba(255,59,48,0.1);
+      background-color: rgba(255, 59, 48, 0.1);
       -webkit-text-fill-color: var(--primary-color);
     }
 
@@ -373,14 +398,14 @@
       font-size: 15px;
       font-weight: 500;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .category-input:focus {
       outline: none;
       border-color: var(--primary-color);
-      background: linear-gradient(135deg, var(--background-color) 0%, rgba(255,59,48,0.02) 100%);
-      box-shadow: 0 4px 16px rgba(255,59,48,0.15);
+      background: linear-gradient(135deg, var(--background-color) 0%, rgba(255, 59, 48, 0.02) 100%);
+      box-shadow: 0 4px 16px rgba(255, 59, 48, 0.15);
       transform: translateY(-1px);
     }
 
@@ -396,13 +421,13 @@
       color: white;
       font-weight: 600;
       font-size: 16px;
-      box-shadow: 0 4px 12px rgba(255,59,48,0.3);
+      box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .category-input-group button:hover {
       transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 6px 20px rgba(255,59,48,0.4);
+      box-shadow: 0 6px 20px rgba(255, 59, 48, 0.4);
     }
 
     .category-input-group button:active {
@@ -422,7 +447,7 @@
       margin-top: auto;
       padding-top: 16px;
       border-top: 1px solid var(--border-color);
-      background: rgba(255,255,255,0.02);
+      background: rgba(255, 255, 255, 0.02);
       border-radius: 8px;
       padding: 12px 16px;
     }
@@ -442,7 +467,7 @@
     .total-duration {
       color: var(--primary-color);
       font-weight: 600;
-      background: rgba(255,59,48,0.1);
+      background: rgba(255, 59, 48, 0.1);
       padding: 4px 8px;
       border-radius: 6px;
     }
@@ -455,9 +480,9 @@
     }
 
     .total-duration.clickable:hover {
-      background: rgba(255,59,48,0.2);
+      background: rgba(255, 59, 48, 0.2);
       transform: scale(1.05);
-      box-shadow: 0 2px 8px rgba(255,59,48,0.3);
+      box-shadow: 0 2px 8px rgba(255, 59, 48, 0.3);
     }
 
     .total-duration.clickable:active {
@@ -494,7 +519,7 @@
     }
 
     .category-item {
-      background: linear-gradient(135deg, var(--background-color) 0%, rgba(255,255,255,0.02) 100%);
+      background: linear-gradient(135deg, var(--background-color) 0%, rgba(255, 255, 255, 0.02) 100%);
       border: 1px solid var(--border-color);
       border-radius: 12px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -502,7 +527,7 @@
       user-select: none;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .category-item::before {
@@ -524,12 +549,12 @@
     .category-item.dragging {
       opacity: 0.6;
       transform: rotate(3deg) scale(1.02);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
 
     .category-item.drag-over {
       border-color: var(--primary-color);
-      background: linear-gradient(135deg, rgba(255,59,48,0.1) 0%, rgba(255,149,0,0.05) 100%);
+      background: linear-gradient(135deg, rgba(255, 59, 48, 0.1) 0%, rgba(255, 149, 0, 0.05) 100%);
       transform: scale(1.02);
     }
 
@@ -541,18 +566,20 @@
       gap: 12px;
       cursor: pointer;
       position: relative;
-    }    .category-item:hover {
-      background: linear-gradient(135deg, var(--surface-hover) 0%, rgba(255,255,255,0.04) 100%);
+    }
+
+    .category-item:hover {
+      background: linear-gradient(135deg, var(--surface-hover) 0%, rgba(255, 255, 255, 0.04) 100%);
       transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-      border-color: rgba(255,255,255,0.1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      border-color: rgba(255, 255, 255, 0.1);
     }
 
     .category-item.active {
-      background: linear-gradient(135deg, rgba(255,59,48,0.12) 0%, rgba(255,149,0,0.08) 100%);
+      background: linear-gradient(135deg, rgba(255, 59, 48, 0.12) 0%, rgba(255, 149, 0, 0.08) 100%);
       border-color: var(--primary-color);
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(255,59,48,0.2);
+      box-shadow: 0 6px 20px rgba(255, 59, 48, 0.2);
     }
 
     .category-item.active::before {
@@ -584,7 +611,8 @@
     .category-title-row .category-name {
       flex: 1 1 auto;
       min-width: 0;
-      max-width: 150px; /* Força truncamento em nomes longos */
+      max-width: 150px;
+      /* Força truncamento em nomes longos */
       overflow: hidden !important;
       text-overflow: ellipsis !important;
       white-space: nowrap !important;
@@ -623,7 +651,7 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border-radius: 6px;
       color: var(--text-secondary);
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
       font-size: 13px;
       flex-shrink: 0;
       border: none;
@@ -656,7 +684,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
       padding: 6px 10px;
       border-radius: 8px;
       font-weight: 500;
@@ -673,7 +701,7 @@
       gap: 6px;
       opacity: 0;
       transition: all 0.3s ease;
-      background: rgba(0,0,0,0.1);
+      background: rgba(0, 0, 0, 0.1);
       padding: 4px;
       border-radius: 8px;
       backdrop-filter: blur(10px);
@@ -687,7 +715,7 @@
 
     .category-btn {
       padding: 10px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       border: none;
       color: var(--text-secondary);
       cursor: pointer;
@@ -705,7 +733,7 @@
       background: var(--primary-color);
       color: white;
       transform: scale(1.1);
-      box-shadow: 0 2px 8px rgba(255,59,48,0.4);
+      box-shadow: 0 2px 8px rgba(255, 59, 48, 0.4);
     }
 
     /* Subcategorias */
@@ -714,7 +742,7 @@
       margin-top: 12px;
       margin-bottom: 12px;
       padding-left: 16px;
-      border-left: 3px solid rgba(255,59,48,0.2);
+      border-left: 3px solid rgba(255, 59, 48, 0.2);
       display: none;
       position: relative;
     }
@@ -746,6 +774,7 @@
         max-height: 0;
         transform: translateY(-10px);
       }
+
       to {
         opacity: 1;
         max-height: 500px;
@@ -758,6 +787,7 @@
         opacity: 0;
         transform: translateY(20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -765,10 +795,13 @@
     }
 
     @keyframes pulse {
-      0%, 100% {
+
+      0%,
+      100% {
         opacity: 1;
         transform: scale(1);
       }
+
       50% {
         opacity: 0.8;
         transform: scale(1.05);
@@ -779,12 +812,29 @@
       animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
-    .category-item:nth-child(1) { animation-delay: 0.05s; }
-    .category-item:nth-child(2) { animation-delay: 0.1s; }
-    .category-item:nth-child(3) { animation-delay: 0.15s; }
-    .category-item:nth-child(4) { animation-delay: 0.2s; }
-    .category-item:nth-child(5) { animation-delay: 0.25s; }
-    .category-item:nth-child(n+6) { animation-delay: 0.3s; }
+    .category-item:nth-child(1) {
+      animation-delay: 0.05s;
+    }
+
+    .category-item:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .category-item:nth-child(3) {
+      animation-delay: 0.15s;
+    }
+
+    .category-item:nth-child(4) {
+      animation-delay: 0.2s;
+    }
+
+    .category-item:nth-child(5) {
+      animation-delay: 0.25s;
+    }
+
+    .category-item:nth-child(n+6) {
+      animation-delay: 0.3s;
+    }
 
     .categories-loading {
       display: flex;
@@ -795,10 +845,10 @@
 
     .category-skeleton {
       height: 70px;
-      background: linear-gradient(90deg, 
-        rgba(255,255,255,0.05) 25%, 
-        rgba(255,255,255,0.1) 50%, 
-        rgba(255,255,255,0.05) 75%);
+      background: linear-gradient(90deg,
+          rgba(255, 255, 255, 0.05) 25%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 255, 255, 0.05) 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
       border-radius: 12px;
@@ -808,14 +858,15 @@
       0% {
         background-position: -200% 0;
       }
+
       100% {
         background-position: 200% 0;
       }
     }
 
     .subcategory-item {
-      background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,59,48,0.02) 100%);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 59, 48, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 8px;
       margin-bottom: 8px;
       position: relative;
@@ -833,7 +884,8 @@
       direction: ltr;
       unicode-bidi: isolate;
       text-align: left;
-      max-width: 140px; /* Largura menor para subcategorias */
+      max-width: 140px;
+      /* Largura menor para subcategorias */
     }
 
     .subcategory-item.active .category-name {
@@ -909,7 +961,7 @@
     .duration-value {
       font-weight: 600;
       color: var(--primary-color);
-      background: rgba(255,59,48,0.1);
+      background: rgba(255, 59, 48, 0.1);
       padding: 4px 12px;
       border-radius: 8px;
       font-size: 13px;
@@ -1010,15 +1062,16 @@
 
     .video-card.drag-over {
       border-color: var(--primary-color);
-      background: rgba(255,59,48,0.1);
+      background: rgba(255, 59, 48, 0.1);
     }
+
     /* Seleção de vídeos (Bulk) */
     .video-select {
       position: absolute;
       top: 12px;
       left: 12px;
       z-index: 15;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       border: 1px solid var(--border-color);
       border-radius: 6px;
       width: 22px;
@@ -1026,14 +1079,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     }
+
     .video-select input {
       width: 16px;
       height: 16px;
       cursor: pointer;
       accent-color: var(--primary-color);
     }
+
     .video-card.selected {
       outline: 2px solid var(--primary-color);
       box-shadow: var(--shadow-md);
@@ -1058,11 +1113,11 @@
     .video-context-hint {
       position: absolute;
       top: 12px;
-  left: 42px;
+      left: 42px;
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
@@ -1103,7 +1158,7 @@
       font-weight: 600;
       margin-bottom: 8px;
       display: -webkit-box;
-  line-clamp: 2;
+      line-clamp: 2;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
@@ -1244,7 +1299,7 @@
       cursor: pointer;
       transition: var(--transition-fast);
       font-size: 13px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .video-gear-dropdown-item:last-child {
@@ -1283,7 +1338,7 @@
       font-size: 14px;
       color: #000;
       z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       cursor: pointer;
       transition: all var(--transition-fast);
     }
@@ -1299,7 +1354,7 @@
       align-items: center;
       gap: 16px;
       padding: 16px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: var(--radius-md);
       margin-bottom: 20px;
       border: 1px solid var(--border-color);
@@ -1345,7 +1400,7 @@
     .annotations-meta {
       margin-top: 12px;
       padding: 12px;
-      background: rgba(255,255,255,0.02);
+      background: rgba(255, 255, 255, 0.02);
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
       font-size: 12px;
@@ -1374,7 +1429,7 @@
     .video-btn.player-action-btn.primary:hover {
       background: linear-gradient(135deg, var(--primary-hover), #d12b20);
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(255,59,48,0.3);
+      box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
     }
 
     /* Hover states para thumbnail e título */
@@ -1414,7 +1469,7 @@
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(4px);
       display: none;
       align-items: center;
@@ -1494,7 +1549,7 @@
     .loading-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0, 0, 0, 0.9);
       display: none;
       align-items: center;
       justify-content: center;
@@ -1560,10 +1615,21 @@
       border-left: 4px solid var(--primary-color);
     }
 
-    .toast.success { border-left-color: var(--success-color); }
-    .toast.error { border-left-color: var(--error-color); }
-    .toast.warning { border-left-color: var(--warning-color); }
-    .toast.info { border-left-color: var(--info-color); }
+    .toast.success {
+      border-left-color: var(--success-color);
+    }
+
+    .toast.error {
+      border-left-color: var(--error-color);
+    }
+
+    .toast.warning {
+      border-left-color: var(--warning-color);
+    }
+
+    .toast.info {
+      border-left-color: var(--info-color);
+    }
 
     .toast-icon {
       font-size: 20px;
@@ -1586,19 +1652,21 @@
       border-radius: var(--radius-md);
       text-align: center;
       border: 1px solid var(--border-color);
-  }
+    }
+
     /* Barra de ações em massa */
     .bulk-actions-bar {
       display: none;
       margin-top: 12px;
       padding: 10px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
       gap: 10px;
       align-items: center;
       flex-wrap: wrap;
     }
+
     .bulk-count {
       font-weight: 700;
       color: var(--primary-color);
@@ -1611,7 +1679,7 @@
       align-items: center;
       gap: 8px;
       padding: 12px 16px;
-      background: linear-gradient(135deg, var(--surface-color), rgba(255,59,48,0.02));
+      background: linear-gradient(135deg, var(--surface-color), rgba(255, 59, 48, 0.02));
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
       color: var(--text-primary);
@@ -1619,21 +1687,21 @@
       transition: all var(--transition-normal);
       font-size: 14px;
       font-weight: 600;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .watch-queue-toggle:hover {
-      background: linear-gradient(135deg, var(--surface-hover), rgba(255,59,48,0.08));
+      background: linear-gradient(135deg, var(--surface-hover), rgba(255, 59, 48, 0.08));
       border-color: var(--primary-color);
       transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(255,59,48,0.2);
+      box-shadow: 0 4px 16px rgba(255, 59, 48, 0.2);
     }
 
     .watch-queue-toggle.active {
-      background: linear-gradient(135deg, rgba(255,59,48,0.15), rgba(255,59,48,0.05));
+      background: linear-gradient(135deg, rgba(255, 59, 48, 0.15), rgba(255, 59, 48, 0.05));
       border-color: var(--primary-color);
       color: var(--primary-color);
-      box-shadow: 0 4px 16px rgba(255,59,48,0.3);
+      box-shadow: 0 4px 16px rgba(255, 59, 48, 0.3);
     }
 
     .queue-count-badge {
@@ -1648,7 +1716,7 @@
       font-size: 11px;
       font-weight: bold;
       margin-left: 8px;
-      box-shadow: 0 2px 6px rgba(255,59,48,0.4);
+      box-shadow: 0 2px 6px rgba(255, 59, 48, 0.4);
       animation: pulse 2s infinite;
     }
 
@@ -1658,7 +1726,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0,0,0,0.3);
+      background: rgba(0, 0, 0, 0.3);
       z-index: 1999;
       display: none;
       opacity: 0;
@@ -1703,6 +1771,7 @@
         opacity: 0;
         transform: translateX(100%);
       }
+
       to {
         opacity: 1;
         transform: translateX(0);
@@ -1712,7 +1781,7 @@
     .queue-header {
       padding: 24px 20px 16px;
       border-bottom: 1px solid var(--border-color);
-      background: linear-gradient(135deg, var(--surface-color) 0%, rgba(255,59,48,0.02) 100%);
+      background: linear-gradient(135deg, var(--surface-color) 0%, rgba(255, 59, 48, 0.02) 100%);
       position: relative;
     }
 
@@ -1751,7 +1820,7 @@
 
     .queue-btn {
       padding: 6px 12px;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-color);
       border-radius: 6px;
       color: var(--text-secondary);
@@ -1761,7 +1830,7 @@
     }
 
     .queue-btn:hover {
-      background: rgba(255,59,48,0.1);
+      background: rgba(255, 59, 48, 0.1);
       border-color: var(--primary-color);
       color: var(--primary-color);
     }
@@ -1810,8 +1879,8 @@
       padding: 12px 16px;
       border-radius: 12px;
       margin-bottom: 8px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       transition: all 0.3s ease;
       cursor: pointer;
       position: relative;
@@ -1831,7 +1900,7 @@
     }
 
     .queue-item:hover {
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
       border-color: var(--primary-color);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
       transform: translateY(-2px);
@@ -1842,9 +1911,9 @@
     }
 
     .queue-item.current {
-      background: linear-gradient(135deg, rgba(255,59,48,0.15) 0%, rgba(255,59,48,0.05) 100%);
+      background: linear-gradient(135deg, rgba(255, 59, 48, 0.15) 0%, rgba(255, 59, 48, 0.05) 100%);
       border-color: var(--primary-color);
-      box-shadow: 0 0 20px rgba(255,59,48,0.2);
+      box-shadow: 0 0 20px rgba(255, 59, 48, 0.2);
     }
 
     .queue-item.current::before {
@@ -1905,7 +1974,7 @@
     }
 
     .queue-item-duration {
-      background: rgba(0,0,0,0.7);
+      background: rgba(0, 0, 0, 0.7);
       color: white;
       padding: 2px 6px;
       border-radius: 4px;
@@ -1930,7 +1999,7 @@
       height: 32px;
       border: none;
       border-radius: 6px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       color: var(--text-primary);
       cursor: pointer;
       transition: all 0.2s ease;
@@ -1961,7 +2030,7 @@
       width: 24px;
       height: 24px;
       border: none;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 4px;
       color: var(--text-secondary);
       cursor: pointer;
@@ -2022,8 +2091,13 @@
 
     /* ===== Animations ========================================================== */
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     /* ===== Context Menu ======================================================= */
@@ -2033,7 +2107,7 @@
       background: var(--surface-color);
       border-radius: 12px;
       padding: 8px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       border: 1px solid var(--border-color);
       backdrop-filter: blur(20px);
       min-width: 220px;
@@ -2048,6 +2122,7 @@
         opacity: 0;
         transform: scale(0.9) translateY(-10px);
       }
+
       100% {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -2234,7 +2309,7 @@
 
     .move-video-target-info {
       padding: 12px;
-      background: rgba(255,59,48,0.1);
+      background: rgba(255, 59, 48, 0.1);
       border: 2px solid var(--primary-color);
       border-radius: 8px;
       text-align: center;
@@ -2266,7 +2341,7 @@
     }
 
     .category-selection-section {
-      background: rgba(255,255,255,0.02);
+      background: rgba(255, 255, 255, 0.02);
       border-radius: 12px;
       padding: 20px;
       border: 1px solid var(--border-color);
@@ -2293,7 +2368,7 @@
 
     .control-btn {
       padding: 6px 12px;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-color);
       border-radius: 6px;
       color: var(--text-secondary);
@@ -2303,7 +2378,7 @@
     }
 
     .control-btn:hover {
-      background: rgba(255,59,48,0.1);
+      background: rgba(255, 59, 48, 0.1);
       border-color: var(--primary-color);
       color: var(--primary-color);
     }
@@ -2322,7 +2397,7 @@
     }
 
     .categories-checklist::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 3px;
     }
 
@@ -2336,7 +2411,7 @@
       align-items: center;
       gap: 12px;
       padding: 12px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: 8px;
       border: 1px solid transparent;
       cursor: pointer;
@@ -2345,12 +2420,12 @@
     }
 
     .category-checkbox-item:hover {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
       border-color: var(--border-color);
     }
 
     .category-checkbox-item.selected {
-      background: rgba(255,59,48,0.1);
+      background: rgba(255, 59, 48, 0.1);
       border-color: var(--primary-color);
     }
 
@@ -2413,7 +2488,7 @@
 
     .subcategory-checkbox-item {
       margin-left: 20px;
-      border-left: 2px solid rgba(255,59,48,0.3);
+      border-left: 2px solid rgba(255, 59, 48, 0.3);
       padding-left: 16px;
     }
 
@@ -2432,9 +2507,9 @@
     .current-total-info {
       text-align: center;
       padding: 20px;
-      background: linear-gradient(135deg, rgba(255,59,48,0.1), rgba(255,140,0,0.1));
+      background: linear-gradient(135deg, rgba(255, 59, 48, 0.1), rgba(255, 140, 0, 0.1));
       border-radius: 12px;
-      border: 1px solid rgba(255,59,48,0.2);
+      border: 1px solid rgba(255, 59, 48, 0.2);
     }
 
     .total-display {
@@ -2455,7 +2530,7 @@
       font-weight: 700;
       color: var(--primary-color);
       font-family: 'Courier New', monospace;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .total-subtitle {
@@ -2505,7 +2580,7 @@
 
     .quick-day-btn {
       padding: 8px 16px;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-color);
       border-radius: 6px;
       color: var(--text-secondary);
@@ -2515,7 +2590,7 @@
     }
 
     .quick-day-btn:hover {
-      background: rgba(255,59,48,0.1);
+      background: rgba(255, 59, 48, 0.1);
       border-color: var(--primary-color);
       color: var(--primary-color);
       transform: translateY(-1px);
@@ -2530,9 +2605,9 @@
       align-items: center;
       gap: 16px;
       padding: 20px;
-      background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(59,130,246,0.1));
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1));
       border-radius: 12px;
-      border: 1px solid rgba(34,197,94,0.3);
+      border: 1px solid rgba(34, 197, 94, 0.3);
       margin-bottom: 16px;
     }
 
@@ -2584,7 +2659,7 @@
       flex-direction: column;
       gap: 4px;
       padding: 12px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: 8px;
       border: 1px solid var(--border-color);
     }
@@ -2606,7 +2681,7 @@
     .video-player-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.95);
+      background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(8px);
       display: none;
       align-items: center;
@@ -2637,7 +2712,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(135deg, var(--surface-color) 0%, rgba(255,59,48,0.02) 100%);
+      background: linear-gradient(135deg, var(--surface-color) 0%, rgba(255, 59, 48, 0.02) 100%);
     }
 
     .video-player-title {
@@ -2653,7 +2728,7 @@
     }
 
     .video-player-close {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       border: none;
       color: var(--text-secondary);
       cursor: pointer;
@@ -2684,7 +2759,8 @@
       position: relative;
       width: 100%;
       height: 0;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      padding-bottom: 56.25%;
+      /* 16:9 aspect ratio */
       background: #000;
     }
 
@@ -2716,8 +2792,8 @@
 
     .queue-info {
       padding: 12px 16px;
-      background: rgba(255,59,48,0.05);
-      border: 1px solid rgba(255,59,48,0.2);
+      background: rgba(255, 59, 48, 0.05);
+      border: 1px solid rgba(255, 59, 48, 0.2);
       border-radius: var(--radius-md);
       display: flex;
       justify-content: space-between;
@@ -2845,6 +2921,7 @@
         opacity: 0;
         transform: translateY(20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -2856,6 +2933,7 @@
         opacity: 0;
         transform: translateY(40px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -2867,6 +2945,7 @@
         opacity: 0;
         transform: translateX(40px);
       }
+
       to {
         opacity: 1;
         transform: translateX(0);
@@ -2874,12 +2953,15 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* ===== Responsividade ====================================================== */
     /* Tablet e dispositivos de orientação vertical */
-    @media (max-width: 1024px), (orientation: portrait) {
+    @media (max-width: 1024px),
+    (orientation: portrait) {
       .header {
         flex-wrap: wrap;
         gap: 8px;
@@ -3414,7 +3496,7 @@
         padding: 10px;
       }
 
-      .bulk-actions-bar > * {
+      .bulk-actions-bar>* {
         width: 100%;
       }
 
@@ -4457,7 +4539,9 @@
     }
 
     /* Melhorias para telas de alta densidade (Retina) */
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    @media (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi) {
+
       .video-thumbnail,
       .queue-item-thumb,
       .annotations-video-thumb,
@@ -4483,6 +4567,7 @@
 
     /* Preferências de movimento reduzido */
     @media (prefers-reduced-motion: reduce) {
+
       *,
       *::before,
       *::after {
@@ -4500,6 +4585,7 @@
 
     /* Melhorias para toque */
     @media (hover: none) and (pointer: coarse) {
+
       .btn,
       .video-btn,
       .category-btn,
@@ -4535,6 +4621,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Left edge reveal zone to bring back the sidebar when collapsed -->
   <div id="leftRevealZone"></div>
@@ -4545,8 +4632,8 @@
     <div class="login-box">
       <h2>🎬 YouTube Hub</h2>
       <form class="login-form" id="loginForm">
-        <input type="email" id="loginEmail" placeholder="E-mail" required autocomplete="email"/>
-        <input type="password" id="loginPassword" placeholder="Senha" required autocomplete="current-password"/>
+        <input type="email" id="loginEmail" placeholder="E-mail" required autocomplete="email" />
+        <input type="password" id="loginPassword" placeholder="Senha" required autocomplete="current-password" />
         <button type="submit" id="loginSubmitBtn">Entrar</button>
         <button type="button" class="guest-btn" onclick="app.loginAsGuest()">Entrar como Convidado</button>
         <div class="auth-links">
@@ -4564,11 +4651,13 @@
     <header class="header">
       <div class="logo">
         <svg viewBox="0 0 24 24">
-          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          <path
+            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
         </svg>
         <span>YouTube Hub</span>
       </div>
-      <button class="btn btn-icon mobile-menu-toggle" id="mobileSidebarToggle" aria-label="Abrir menu de categorias" title="Categorias">
+      <button class="btn btn-icon mobile-menu-toggle" id="mobileSidebarToggle" aria-label="Abrir menu de categorias"
+        title="Categorias">
         ☰
       </button>
       <div class="header-actions">
@@ -4602,7 +4691,8 @@
             CATEGORIAS
           </div>
           <div class="category-input-group">
-            <input type="text" class="category-input" id="newCategoryInput" placeholder="Nova categoria" onkeypress="if(event.key==='Enter') app.addCategory()"/>
+            <input type="text" class="category-input" id="newCategoryInput" placeholder="Nova categoria"
+              onkeypress="if(event.key==='Enter') app.addCategory()" />
             <button class="btn" style="padding: 10px;" onclick="app.addCategory()">+</button>
           </div>
         </div>
@@ -4611,7 +4701,8 @@
           <div class="sidebar-footer">
             <div class="total-summary">
               <span class="total-label">Total geral:</span>
-              <span class="total-duration clickable" id="totalDuration" onclick="app.showTimeCalculatorModal()" title="Clique para calcular tempo por dia">00:00:00</span>
+              <span class="total-duration clickable" id="totalDuration" onclick="app.showTimeCalculatorModal()"
+                title="Clique para calcular tempo por dia">00:00:00</span>
             </div>
           </div>
         </div>
@@ -4630,10 +4721,11 @@
           <div class="controls">
             <div class="search-box">
               <span class="search-icon">🔍</span>
-              <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar vídeos..." oninput="app.filterVideos()"/>
+              <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar vídeos..."
+                oninput="app.filterVideos()" />
             </div>
             <label style="display:flex; align-items:center; gap:6px; font-size:13px; color: var(--text-secondary);">
-              <input type="checkbox" id="globalSearchToggle" onchange="app.filterVideos()"/>
+              <input type="checkbox" id="globalSearchToggle" onchange="app.filterVideos()" />
               Pesquisa global
             </label>
             <select class="filter-select" id="watchedFilter" onchange="app.filterVideos()">
@@ -4649,19 +4741,22 @@
             <button class="btn" onclick="app.showImportPlaylistModal()" style="display:none;" id="importPlaylistBtn">
               📋 Importar Playlist
             </button>
-            <button class="btn btn-secondary" onclick="app.showCategoryStats()" style="display:none;" id="categoryInfoBtn">
+            <button class="btn btn-secondary" onclick="app.showCategoryStats()" style="display:none;"
+              id="categoryInfoBtn">
               📊 Estatísticas
             </button>
           </div>
           <!-- Barra de Ações em Massa -->
           <div class="bulk-actions-bar" id="bulkActionsBar" aria-live="polite">
             <label style="display:flex; align-items:center; gap:6px;">
-              <input type="checkbox" id="selectAllVideos" onchange="app.toggleSelectAllVideos(this.checked)"> Selecionar tudo
+              <input type="checkbox" id="selectAllVideos" onchange="app.toggleSelectAllVideos(this.checked)"> Selecionar
+              tudo
             </label>
             <span class="bulk-count" id="bulkSelectedCount" style="margin-left:8px;">0 selecionado(s)</span>
             <div style="flex:1"></div>
             <button class="btn btn-secondary" onclick="app.bulkMarkAsWatched(true)">✅ Marcar como assistido</button>
-            <button class="btn btn-secondary" onclick="app.bulkMarkAsWatched(false)">↩️ Marcar como não assistido</button>
+            <button class="btn btn-secondary" onclick="app.bulkMarkAsWatched(false)">↩️ Marcar como não
+              assistido</button>
             <button class="btn btn-secondary" onclick="app.bulkAddToQueue()">➕ Adicionar à fila</button>
             <select id="bulkMoveTarget" class="filter-select" style="min-width:220px;">
               <option value="">Mover para…</option>
@@ -4690,16 +4785,20 @@
       </div>
       <form class="modal-body" id="registerForm">
         <label class="modal-label" for="registerDisplayName">Nome completo</label>
-        <input type="text" class="modal-input" id="registerDisplayName" placeholder="Como podemos chamar você?" autocomplete="name"/>
+        <input type="text" class="modal-input" id="registerDisplayName" placeholder="Como podemos chamar você?"
+          autocomplete="name" />
 
         <label class="modal-label" for="registerEmail">E-mail</label>
-        <input type="email" class="modal-input" id="registerEmail" placeholder="voce@exemplo.com" required autocomplete="email"/>
+        <input type="email" class="modal-input" id="registerEmail" placeholder="voce@exemplo.com" required
+          autocomplete="email" />
 
         <label class="modal-label" for="registerPassword">Senha</label>
-        <input type="password" class="modal-input" id="registerPassword" placeholder="Mínimo 6 caracteres" required autocomplete="new-password"/>
+        <input type="password" class="modal-input" id="registerPassword" placeholder="Mínimo 6 caracteres" required
+          autocomplete="new-password" />
 
         <label class="modal-label" for="registerPasswordConfirm">Confirmar senha</label>
-        <input type="password" class="modal-input" id="registerPasswordConfirm" placeholder="Repita a senha" required autocomplete="new-password"/>
+        <input type="password" class="modal-input" id="registerPasswordConfirm" placeholder="Repita a senha" required
+          autocomplete="new-password" />
 
         <p class="form-feedback" id="registerMessage"></p>
       </form>
@@ -4718,7 +4817,8 @@
       </div>
       <form class="modal-body" id="passwordResetForm">
         <label class="modal-label" for="resetEmail">E-mail cadastrado</label>
-        <input type="email" class="modal-input" id="resetEmail" placeholder="voce@exemplo.com" required autocomplete="email"/>
+        <input type="email" class="modal-input" id="resetEmail" placeholder="voce@exemplo.com" required
+          autocomplete="email" />
         <p class="form-feedback" id="resetMessage"></p>
       </form>
       <div class="modal-footer">
@@ -4865,7 +4965,7 @@ FirebaseApp.initializeApp(options);</pre>
         <h2 class="modal-title">Adicionar Vídeo</h2>
       </div>
       <div class="modal-body">
-        <input type="text" class="modal-input" id="videoUrlInput" placeholder="Cole o URL do YouTube aqui"/>
+        <input type="text" class="modal-input" id="videoUrlInput" placeholder="Cole o URL do YouTube aqui" />
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" onclick="app.closeModal('addVideoModal')">Cancelar</button>
@@ -4882,7 +4982,7 @@ FirebaseApp.initializeApp(options);</pre>
       </div>
       <div class="modal-body">
         <label class="modal-label">Título do vídeo</label>
-        <input type="text" class="modal-input" id="editVideoTitle" placeholder="Novo título"/>
+        <input type="text" class="modal-input" id="editVideoTitle" placeholder="Novo título" />
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" onclick="app.closeModal('editVideoModal')">Cancelar</button>
@@ -4898,7 +4998,7 @@ FirebaseApp.initializeApp(options);</pre>
         <h2 class="modal-title">Renomear Categoria</h2>
       </div>
       <div class="modal-body">
-        <input type="text" class="modal-input" id="renameCategoryInput" placeholder="Novo nome"/>
+        <input type="text" class="modal-input" id="renameCategoryInput" placeholder="Novo nome" />
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" onclick="app.closeModal('renameCategoryModal')">Cancelar</button>
@@ -4914,7 +5014,7 @@ FirebaseApp.initializeApp(options);</pre>
         <h2 class="modal-title">Adicionar Subcategoria</h2>
       </div>
       <div class="modal-body">
-        <input type="text" class="modal-input" id="subcategoryNameInput" placeholder="Nome da subcategoria"/>
+        <input type="text" class="modal-input" id="subcategoryNameInput" placeholder="Nome da subcategoria" />
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" onclick="app.closeModal('addSubcategoryModal')">Cancelar</button>
@@ -4981,17 +5081,12 @@ FirebaseApp.initializeApp(options);</pre>
               <span class="total-display-value" id="calculatorTotalTime">00:00:00</span>
             </div>
           </div>
-          
+
           <div class="time-input-section">
             <label class="input-label" for="targetDaysInput">Em quantos dias você quer terminar?</label>
             <div class="date-input-group">
-              <input type="number" 
-                     id="targetDaysInput" 
-                     class="modal-input time-input" 
-                     placeholder="Ex: 30" 
-                     min="1" 
-                     max="365"
-                     oninput="app.calculateDailyTime()">
+              <input type="number" id="targetDaysInput" class="modal-input time-input" placeholder="Ex: 30" min="1"
+                max="365" oninput="app.calculateDailyTime()">
               <span class="input-suffix">dias</span>
             </div>
             <div class="quick-days">
@@ -5008,10 +5103,11 @@ FirebaseApp.initializeApp(options);</pre>
               <div class="result-content">
                 <div class="result-title">Tempo necessário por dia:</div>
                 <div class="result-value" id="dailyTimeResult">--:--</div>
-                <div class="result-subtitle" id="resultSubtitle">para completar em <span id="resultDays">--</span> dias</div>
+                <div class="result-subtitle" id="resultSubtitle">para completar em <span id="resultDays">--</span> dias
+                </div>
               </div>
             </div>
-            
+
             <div class="additional-info">
               <div class="info-item">
                 <span class="info-label">Horas por semana:</span>
@@ -5050,9 +5146,7 @@ FirebaseApp.initializeApp(options);</pre>
           <!-- Informações do vídeo serão inseridas aqui -->
         </div>
         <label class="modal-label">Suas anotações:</label>
-        <textarea 
-          class="modal-input annotations-textarea" 
-          id="annotationsTextarea" 
+        <textarea class="modal-input annotations-textarea" id="annotationsTextarea"
           placeholder="Digite suas anotações sobre este vídeo aqui...&#10;&#10;Dicas:&#10;• Resumo dos pontos principais&#10;• Timestamps importantes&#10;• Suas reflexões e insights&#10;• Links relacionados"
           rows="10"></textarea>
         <div class="annotations-meta" id="annotationsMeta">
@@ -5105,7 +5199,7 @@ FirebaseApp.initializeApp(options);</pre>
       </div>
       <div class="modal-body">
         <label class="modal-label">YouTube Data API Key</label>
-        <input type="password" class="modal-input" id="apiKeyInput" placeholder="Sua chave da API"/>
+        <input type="password" class="modal-input" id="apiKeyInput" placeholder="Sua chave da API" />
         <p style="color: var(--text-secondary); font-size: 12px; margin-top: -8px;">
           Necessária para importar playlists e obter duração dos vídeos.
         </p>
@@ -5137,7 +5231,7 @@ FirebaseApp.initializeApp(options);</pre>
             <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">
               Restaure dados de um arquivo JSON exportado anteriormente
             </p>
-            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="app.importData(event)"/>
+            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="app.importData(event)" />
             <button class="btn" onclick="document.getElementById('importFile').click()">📤 Importar Dados</button>
           </div>
         </div>
@@ -5155,8 +5249,9 @@ FirebaseApp.initializeApp(options);</pre>
         <h2 class="modal-title">Importar Playlist do YouTube</h2>
       </div>
       <div class="modal-body">
-        <input type="text" class="modal-input" id="playlistUrlInput" placeholder="Cole o URL da playlist aqui"/>
-        <div id="playlistPreview" style="display:none; margin-top: 16px; padding: 12px; background: var(--background-color); border-radius: var(--radius-md);">
+        <input type="text" class="modal-input" id="playlistUrlInput" placeholder="Cole o URL da playlist aqui" />
+        <div id="playlistPreview"
+          style="display:none; margin-top: 16px; padding: 12px; background: var(--background-color); border-radius: var(--radius-md);">
           <p><strong>Playlist encontrada:</strong></p>
           <p id="playlistTitle">Carregando...</p>
           <p id="playlistVideoCount">0 vídeos</p>
@@ -5211,7 +5306,8 @@ FirebaseApp.initializeApp(options);</pre>
       <div class="queue-empty" id="queueEmpty">
         <div class="queue-empty-icon">🎬</div>
         <div class="queue-empty-message">Sua fila está vazia</div>
-        <div class="queue-empty-subtitle">Adicione vídeos à fila usando o menu de engrenagem dos vídeos para criar sua lista de reprodução personalizada</div>
+        <div class="queue-empty-subtitle">Adicione vídeos à fila usando o menu de engrenagem dos vídeos para criar sua
+          lista de reprodução personalizada</div>
       </div>
       <div class="queue-list" id="queueList"></div>
     </div>
@@ -5232,12 +5328,7 @@ FirebaseApp.initializeApp(options);</pre>
           <div class="video-loading-text">Carregando vídeo...</div>
         </div>
         <div class="video-iframe-container">
-          <iframe 
-            id="videoPlayerIframe" 
-            class="video-iframe"
-            src="" 
-            frameborder="0" 
-            allowfullscreen
+          <iframe id="videoPlayerIframe" class="video-iframe" src="" frameborder="0" allowfullscreen
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             style="display: none;">
           </iframe>
@@ -5354,9 +5445,9 @@ FirebaseApp.initializeApp(options);</pre>
       // Menu de engrenagem
       gearMenuClickHandler: null,
       gearMenuKeyHandler: null,
-    isRemoteSyncing: false,
-    _mobileSidebarKeyHandler: null,
-    _responsiveResizeHandler: null,
+      isRemoteSyncing: false,
+      _mobileSidebarKeyHandler: null,
+      _responsiveResizeHandler: null,
 
       /**
        * Inicialização da aplicação
@@ -5429,7 +5520,7 @@ FirebaseApp.initializeApp(options);</pre>
             if (modals.length > 0) {
               this.closeModal(modals[modals.length - 1].id);
             }
-            
+
             // Fechar menus de engrenagem abertos
             this.closeAllGearMenus();
           }
@@ -5842,12 +5933,12 @@ FirebaseApp.initializeApp(options);</pre>
         if (userNameEl) userNameEl.textContent = username;
         if (userAvatarEl) userAvatarEl.textContent = username.charAt(0).toUpperCase();
 
-    this.renderCategories();
-    this.updateTotalDuration();
-    this.updateQueueBadge();
-    // Atualiza durações de vídeos antigos que não possuem duração salva (assíncrono)
-    // Não bloqueia a UI; mostrará progresso se houver vídeos pendentes.
-    this.backfillMissingDurations();
+        this.renderCategories();
+        this.updateTotalDuration();
+        this.updateQueueBadge();
+        // Atualiza durações de vídeos antigos que não possuem duração salva (assíncrono)
+        // Não bloqueia a UI; mostrará progresso se houver vídeos pendentes.
+        this.backfillMissingDurations();
       },
 
       /**
@@ -5886,12 +5977,12 @@ FirebaseApp.initializeApp(options);</pre>
         input.value = '';
         this.saveData();
         this.renderCategories();
-        
+
         // Pequeno delay para mostrar a animação
         setTimeout(() => {
           this.showToast(`Categoria "${name}" criada com sucesso! 🎉`, 'success');
         }, 200);
-        
+
         // Foca no input para facilitar criação de múltiplas categorias
         setTimeout(() => input.focus(), 300);
       },
@@ -5908,7 +5999,7 @@ FirebaseApp.initializeApp(options);</pre>
 
         this.renderCategories();
         this.renderVideos();
-        
+
         const hasCategory = this.currentCategory !== null;
         document.getElementById('contentTitle').textContent = hasCategory ? this.currentCategory.name : 'Selecione uma categoria';
         document.getElementById('addVideoBtn').style.display = hasCategory ? 'inline-flex' : 'none';
@@ -5959,7 +6050,7 @@ FirebaseApp.initializeApp(options);</pre>
         this.renamingCategoryId = categoryId;
         const category = this.findCategoryById(categoryId);
         if (!category) return;
-        
+
         document.getElementById('renameCategoryInput').value = category.name;
         this.openModal('renameCategoryModal');
       },
@@ -6027,7 +6118,7 @@ FirebaseApp.initializeApp(options);</pre>
         if (e) e.stopPropagation();
         const element = document.getElementById(`expand-${categoryId}`);
         const subList = document.getElementById(`sub-${categoryId}`);
-        
+
         if (element && subList) {
           const nowExpanded = !element.classList.contains('expanded');
           element.classList.toggle('expanded');
@@ -6087,7 +6178,7 @@ FirebaseApp.initializeApp(options);</pre>
        */
       renderCategories() {
         const list = document.getElementById('categoriesList');
-        
+
         // Se não há categorias, mostra estado vazio
         if (this.categories.length === 0) {
           list.innerHTML = `
@@ -6099,7 +6190,7 @@ FirebaseApp.initializeApp(options);</pre>
           `;
           return;
         }
-        
+
         list.innerHTML = '';
 
         // Ordena categorias por ordem
@@ -6188,12 +6279,12 @@ FirebaseApp.initializeApp(options);</pre>
           subList.setAttribute('aria-hidden', 'true');
           subList.setAttribute('role', 'group');
           subList.setAttribute('aria-hidden', 'true');
-          
+
           category.subcategories.forEach(subcat => {
             const subItem = this.createCategoryElement(subcat, true);
             subList.appendChild(subItem);
           });
-          
+
           li.appendChild(subList);
         }
 
@@ -6220,10 +6311,10 @@ FirebaseApp.initializeApp(options);</pre>
       handleCategoryDragOver(e) {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
-        
+
         const draggingItem = document.querySelector('.category-item.dragging');
         const targetItem = e.target.closest('.category-item');
-        
+
         if (targetItem && targetItem !== draggingItem) {
           targetItem.classList.add('drag-over');
         }
@@ -6232,7 +6323,7 @@ FirebaseApp.initializeApp(options);</pre>
       handleCategoryDrop(e, targetCategory) {
         e.preventDefault();
         e.stopPropagation();
-        
+
         document.querySelectorAll('.category-item').forEach(item => {
           item.classList.remove('drag-over');
         });
@@ -6293,7 +6384,7 @@ FirebaseApp.initializeApp(options);</pre>
         this.showLoading(true);
         try {
           const videoInfo = await this.fetchVideoInfo(videoId);
-          
+
           const video = {
             id: videoId,
             url,
@@ -6313,7 +6404,7 @@ FirebaseApp.initializeApp(options);</pre>
 
           this.currentCategory.videos.push(video);
           this.updateCategoryDuration(this.currentCategory);
-          
+
           this.saveData();
           this.renderVideos();
           this.renderCategories();
@@ -6332,7 +6423,7 @@ FirebaseApp.initializeApp(options);</pre>
           /youtube\.com\/watch\?.*v=([^&\n?#]+)/,
           /youtube\.com\/shorts\/([^?\n&#/]+)/
         ];
-        
+
         for (const pattern of patterns) {
           const match = url.match(pattern);
           if (match) return match[1];
@@ -6346,14 +6437,14 @@ FirebaseApp.initializeApp(options);</pre>
           if (this.settings.youtubeApiKey) {
             const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${this.settings.youtubeApiKey}`;
             const response = await fetch(apiUrl);
-            
+
             if (response.ok) {
               const data = await response.json();
               if (data.items && data.items[0]) {
                 const item = data.items[0];
                 const snippet = item.snippet;
                 const duration = this.parseIsoDuration(item.contentDetails.duration);
-                
+
                 return {
                   title: snippet.title,
                   channel: snippet.channelTitle,
@@ -6393,21 +6484,21 @@ FirebaseApp.initializeApp(options);</pre>
         // Converte duração ISO 8601 (PT1H2M10S) para segundos
         const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
         if (!match) return 0;
-        
+
         const hours = parseInt(match[1] || 0);
         const minutes = parseInt(match[2] || 0);
         const seconds = parseInt(match[3] || 0);
-        
+
         return hours * 3600 + minutes * 60 + seconds;
       },
 
       formatDuration(seconds) {
         if (!seconds || seconds === 0) return '00:00';
-        
+
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
         const secs = seconds % 60;
-        
+
         if (hours > 0) {
           return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
@@ -6417,31 +6508,31 @@ FirebaseApp.initializeApp(options);</pre>
       updateCategoryDuration(category) {
         // Calcula duração total dos vídeos na categoria
         let totalDuration = 0;
-        
+
         for (const video of category.videos) {
           totalDuration += video.duration || 0;
         }
-        
+
         for (const subcat of category.subcategories || []) {
           this.updateCategoryDuration(subcat);
           totalDuration += subcat.totalDuration || 0;
         }
-        
+
         category.totalDuration = totalDuration;
       },
 
       updateTotalDuration() {
         // Calcula duração total de todos os vídeos
         let totalDuration = 0;
-        
+
         for (const category of this.categories) {
           this.updateCategoryDuration(category);
           totalDuration += category.totalDuration || 0;
         }
-        
+
         const totalElement = document.getElementById('totalDuration');
         totalElement.textContent = this.formatDuration(totalDuration);
-        
+
         // Adiciona animação de pulsação se há conteúdo para calcular
         if (totalDuration > 0) {
           totalElement.style.animation = 'pulse 0.3s ease-in-out';
@@ -6456,7 +6547,7 @@ FirebaseApp.initializeApp(options);</pre>
         this.editingVideoId = videoId;
         const video = this.currentCategory?.videos.find(v => v.id === videoId);
         if (!video) return;
-        
+
         document.getElementById('editVideoTitle').value = video.title;
         this.openModal('editVideoModal');
       },
@@ -6470,7 +6561,7 @@ FirebaseApp.initializeApp(options);</pre>
 
         const video = this.currentCategory?.videos.find(v => v.id === this.editingVideoId);
         if (!video) return;
-        
+
         video.title = newTitle;
         video.customTitle = true;
 
@@ -6484,13 +6575,13 @@ FirebaseApp.initializeApp(options);</pre>
         if (e) e.stopPropagation();
         const video = this.currentCategory?.videos.find(v => v.id === videoId);
         if (!video) return;
-        
+
         video.watched = !video.watched;
         if (video.watched) {
           video.pendingAI = false;
           video.reportDone = false;
         }
-        
+
         this.saveData();
         this.renderVideos();
         this.showToast(`Vídeo marcado como ${video.watched ? 'assistido' : 'não assistido'}`, 'success');
@@ -6535,10 +6626,10 @@ FirebaseApp.initializeApp(options);</pre>
 
       deleteVideo(videoId) {
         if (!this.currentCategory) return;
-        
+
         this.currentCategory.videos = this.currentCategory.videos.filter(v => v.id !== videoId);
         this.updateCategoryDuration(this.currentCategory);
-        
+
         this.saveData();
         this.renderVideos();
         this.renderCategories();
@@ -6573,8 +6664,8 @@ FirebaseApp.initializeApp(options);</pre>
           return;
         }
 
-    const grid = document.createElement('div');
-    grid.className = 'videos-grid';
+        const grid = document.createElement('div');
+        grid.className = 'videos-grid';
 
         const sortedVideos = [...this.currentCategory.videos].sort((a, b) => a.order - b.order);
 
@@ -6605,7 +6696,7 @@ FirebaseApp.initializeApp(options);</pre>
           if (category.id !== this.currentCategory?.id) {
             return true;
           }
-          
+
           // Subcategorias disponíveis
           if (category.subcategories) {
             for (const subcategory of category.subcategories) {
@@ -6621,7 +6712,7 @@ FirebaseApp.initializeApp(options);</pre>
       createVideoCard(video, index) {
         const card = document.createElement('div');
         card.className = 'video-card';
-        
+
         if (video.watched) card.classList.add('watched');
         else if (video.pendingAI) card.classList.add('pending-ai');
         else if (video.reportDone) card.classList.add('report-done');
@@ -6700,7 +6791,7 @@ FirebaseApp.initializeApp(options);</pre>
 
         const portal = document.getElementById('gearDropdownPortal');
         const existingDropdown = portal.querySelector(`#gear-dropdown-${videoId}`);
-        
+
         // Se já existe, toggle
         if (existingDropdown) {
           if (existingDropdown.classList.contains('active')) {
@@ -6740,12 +6831,12 @@ FirebaseApp.initializeApp(options);</pre>
 
         const hasAnnotations = video.annotations && video.annotations.trim().length > 0;
         const portal = document.getElementById('gearDropdownPortal');
-        
+
         // Criar dropdown
         const dropdown = document.createElement('div');
         dropdown.className = 'video-gear-dropdown';
         dropdown.id = `gear-dropdown-${videoId}`;
-        
+
         dropdown.innerHTML = `
           <div class="video-gear-dropdown-item" onclick="app.toggleWatched('${videoId}', event)">
             <span class="video-gear-dropdown-icon">${video.watched ? '👁️' : '👁️‍🗨️'}</span>
@@ -6770,15 +6861,15 @@ FirebaseApp.initializeApp(options);</pre>
         `;
 
         portal.appendChild(dropdown);
-        
+
         // Posicionar baseado no botão
         this.positionGearMenu(dropdown, button);
-        
+
         // Ativar com pequeno delay para animação
         setTimeout(() => {
           dropdown.classList.add('active');
         }, 10);
-        
+
         // Setup listeners
         this.setupGearMenuListeners(videoId);
       },
@@ -6787,25 +6878,25 @@ FirebaseApp.initializeApp(options);</pre>
         const buttonRect = button.getBoundingClientRect();
         const dropdownWidth = 200;
         const dropdownHeight = 180;
-        
+
         // Posição inicial: embaixo e à direita do botão
         let left = buttonRect.left;
         let top = buttonRect.bottom + 5;
-        
+
         // Ajustar horizontalmente se sair da tela
         if (left + dropdownWidth > window.innerWidth - 10) {
           left = buttonRect.right - dropdownWidth;
         }
-        
+
         // Ajustar verticalmente se sair da tela
         if (top + dropdownHeight > window.innerHeight - 10) {
           top = buttonRect.top - dropdownHeight - 5;
         }
-        
+
         // Garantir que não saia das bordas
         left = Math.max(10, Math.min(left, window.innerWidth - dropdownWidth - 10));
         top = Math.max(10, Math.min(top, window.innerHeight - dropdownHeight - 10));
-        
+
         dropdown.style.left = left + 'px';
         dropdown.style.top = top + 'px';
       },
@@ -6815,7 +6906,7 @@ FirebaseApp.initializeApp(options);</pre>
         const handleClickOutside = (e) => {
           const portal = document.getElementById('gearDropdownPortal');
           const activeDropdown = portal.querySelector(`#gear-dropdown-${activeVideoId}`);
-          
+
           if (activeDropdown && !activeDropdown.contains(e.target)) {
             // Verificar se não clicou no botão da engrenagem
             const gearButton = e.target.closest('.video-gear-btn');
@@ -6904,7 +6995,7 @@ FirebaseApp.initializeApp(options);</pre>
       updateAnnotationsMeta(video) {
         const metaContainer = document.getElementById('annotationsMeta');
         const hasAnnotations = video.annotations && video.annotations.trim().length > 0;
-        
+
         if (!hasAnnotations) {
           metaContainer.innerHTML = '<div style="text-align: center; color: var(--text-secondary); font-style: italic;">Nenhuma anotação ainda</div>';
           return;
@@ -6943,7 +7034,7 @@ FirebaseApp.initializeApp(options);</pre>
 
         // Salvar anotações
         video.annotations = newAnnotations;
-        
+
         // Atualizar timestamps
         const now = new Date().toISOString();
         if (!hadAnnotations && newAnnotations) {
@@ -7002,7 +7093,7 @@ FirebaseApp.initializeApp(options);</pre>
       handleVideoDragOver(e) {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
-        
+
         const targetCard = e.target.closest('.video-card');
         if (targetCard && !targetCard.classList.contains('dragging')) {
           targetCard.classList.add('drag-over');
@@ -7012,7 +7103,7 @@ FirebaseApp.initializeApp(options);</pre>
       handleVideoDrop(e, targetIndex) {
         e.preventDefault();
         e.stopPropagation();
-        
+
         document.querySelectorAll('.video-card').forEach(card => {
           card.classList.remove('drag-over');
         });
@@ -7043,7 +7134,7 @@ FirebaseApp.initializeApp(options);</pre>
         const searchTerm = document.getElementById('searchInput').value.toLowerCase();
         const filterValue = document.getElementById('watchedFilter').value;
         const globalSearch = !!document.getElementById('globalSearchToggle')?.checked;
-        
+
         this.uiState.search = searchTerm;
         this.uiState.filter = filterValue;
         this.uiState.globalSearch = globalSearch;
@@ -7055,8 +7146,8 @@ FirebaseApp.initializeApp(options);</pre>
           for (const category of this.categories) {
             const vids = category.videos || [];
             vids.forEach(v => {
-              const t = (v.title||'').toLowerCase();
-              const c = (v.channel||'').toLowerCase();
+              const t = (v.title || '').toLowerCase();
+              const c = (v.channel || '').toLowerCase();
               if (t.includes(searchTerm) || c.includes(searchTerm)) {
                 results.push({ video: v, category });
               }
@@ -7064,8 +7155,8 @@ FirebaseApp.initializeApp(options);</pre>
             for (const sub of category.subcategories || []) {
               const vids2 = sub.videos || [];
               vids2.forEach(v => {
-                const t = (v.title||'').toLowerCase();
-                const c = (v.channel||'').toLowerCase();
+                const t = (v.title || '').toLowerCase();
+                const c = (v.channel || '').toLowerCase();
                 if (t.includes(searchTerm) || c.includes(searchTerm)) {
                   results.push({ video: v, category: sub, parent: category });
                 }
@@ -7130,22 +7221,22 @@ FirebaseApp.initializeApp(options);</pre>
         }
 
         const cards = document.querySelectorAll('.video-card');
-        
+
         cards.forEach(card => {
           const title = card.querySelector('.video-title')?.textContent.toLowerCase() || '';
           const channel = card.querySelector('.video-channel')?.textContent.toLowerCase() || '';
-          
+
           const matchesSearch = title.includes(searchTerm) || channel.includes(searchTerm);
-          
+
           let matchesFilter = true;
           switch (filterValue) {
             case 'watched':
               matchesFilter = card.classList.contains('watched');
               break;
             case 'unwatched':
-              matchesFilter = !card.classList.contains('watched') && 
-                             !card.classList.contains('pending-ai') && 
-                             !card.classList.contains('report-done');
+              matchesFilter = !card.classList.contains('watched') &&
+                !card.classList.contains('pending-ai') &&
+                !card.classList.contains('report-done');
               break;
             case 'pending-ai':
               matchesFilter = card.classList.contains('pending-ai');
@@ -7154,7 +7245,7 @@ FirebaseApp.initializeApp(options);</pre>
               matchesFilter = card.classList.contains('report-done');
               break;
           }
-          
+
           card.style.display = matchesSearch && matchesFilter ? 'block' : 'none';
         });
         // Atualiza contagem visível após filtros
@@ -7355,7 +7446,7 @@ FirebaseApp.initializeApp(options);</pre>
         const toggle = document.getElementById('watchQueueToggle');
         const overlay = document.getElementById('queueOverlay');
         const isActive = panel.classList.contains('active');
-        
+
         if (isActive) {
           this.closeWatchQueue();
         } else {
@@ -7367,12 +7458,12 @@ FirebaseApp.initializeApp(options);</pre>
         const panel = document.getElementById('watchQueuePanel');
         const toggle = document.getElementById('watchQueueToggle');
         const overlay = document.getElementById('queueOverlay');
-        
+
         overlay.classList.add('active');
         panel.classList.add('active');
         toggle.classList.add('active');
         this.updateQueueDisplay();
-        
+
         // Listener para fechar com Escape
         document.addEventListener('keydown', this.handleQueueEscape);
       },
@@ -7381,11 +7472,11 @@ FirebaseApp.initializeApp(options);</pre>
         const panel = document.getElementById('watchQueuePanel');
         const toggle = document.getElementById('watchQueueToggle');
         const overlay = document.getElementById('queueOverlay');
-        
+
         panel.classList.remove('active');
         toggle.classList.remove('active');
         overlay.classList.remove('active');
-        
+
         // Remove listener
         document.removeEventListener('keydown', this.handleQueueEscape);
       },
@@ -7398,16 +7489,16 @@ FirebaseApp.initializeApp(options);</pre>
 
       addToQueue(videoId, event) {
         if (event) event.stopPropagation();
-        
+
         const video = this.getVideoById(videoId);
         if (!video) return;
-        
+
         // Verifica se já está na fila
         if (this._watchQueue.some(item => item.videoId === videoId)) {
           this.showToast('Vídeo já está na fila', 'warning');
           return;
         }
-        
+
         // Adiciona à fila com informações da categoria
         const queueItem = {
           videoId: video.id,
@@ -7419,7 +7510,7 @@ FirebaseApp.initializeApp(options);</pre>
           categoryName: this.currentCategory.name,
           addedAt: new Date().toISOString()
         };
-        
+
         this._watchQueue.push(queueItem);
         this.saveData();
         this.updateQueueDisplay();
@@ -7430,7 +7521,7 @@ FirebaseApp.initializeApp(options);</pre>
       bulkAddToQueue() {
         const items = this.getSelectedVideosInCurrentCategory();
         if (items.length === 0) return;
-        
+
         let added = 0;
         items.forEach(video => {
           // Verifica se já está na fila
@@ -7449,7 +7540,7 @@ FirebaseApp.initializeApp(options);</pre>
             added++;
           }
         });
-        
+
         this.saveData();
         this.updateQueueDisplay();
         this.updateQueueBadge();
@@ -7468,7 +7559,7 @@ FirebaseApp.initializeApp(options);</pre>
 
       clearQueue() {
         if (this._watchQueue.length === 0) return;
-        
+
         this.confirmAction('Limpar Fila', 'Tem certeza que deseja remover todos os vídeos da fila?', () => {
           const count = this._watchQueue.length;
           this._watchQueue = [];
@@ -7481,22 +7572,22 @@ FirebaseApp.initializeApp(options);</pre>
 
       shuffleQueue() {
         if (this._watchQueue.length < 2) return;
-        
+
         // Fisher-Yates shuffle
         for (let i = this._watchQueue.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [this._watchQueue[i], this._watchQueue[j]] = [this._watchQueue[j], this._watchQueue[i]];
         }
-        
+
         this.saveData();
         this.updateQueueDisplay();
         this.showToast('Fila embaralhada', 'success');
       },
 
       moveQueueItem(fromIndex, toIndex) {
-        if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || 
-            fromIndex >= this._watchQueue.length || toIndex >= this._watchQueue.length) return;
-        
+        if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 ||
+          fromIndex >= this._watchQueue.length || toIndex >= this._watchQueue.length) return;
+
         const item = this._watchQueue.splice(fromIndex, 1)[0];
         this._watchQueue.splice(toIndex, 0, item);
         this.saveData();
@@ -7505,14 +7596,14 @@ FirebaseApp.initializeApp(options);</pre>
 
       playNextInQueue() {
         if (this._watchQueue.length === 0) return;
-        
+
         const nextItem = this._watchQueue[0];
         // Remove da fila
         this._watchQueue.shift();
         this.saveData();
         this.updateQueueDisplay();
         this.updateQueueBadge();
-        
+
         // Vai para a categoria e reproduz o vídeo
         this.selectCategory(nextItem.categoryId);
         setTimeout(() => {
@@ -7522,14 +7613,14 @@ FirebaseApp.initializeApp(options);</pre>
 
       playQueueItem(index) {
         if (index < 0 || index >= this._watchQueue.length) return;
-        
+
         const item = this._watchQueue[index];
         // Remove da fila
         this._watchQueue.splice(index, 1);
         this.saveData();
         this.updateQueueDisplay();
         this.updateQueueBadge();
-        
+
         // Vai para a categoria e reproduz o vídeo
         this.selectCategory(item.categoryId);
         setTimeout(() => {
@@ -7542,7 +7633,7 @@ FirebaseApp.initializeApp(options);</pre>
         const queueEmpty = document.getElementById('queueEmpty');
         const queueSubtitle = document.getElementById('queueSubtitle');
         const playNextBtn = document.getElementById('playNextBtn');
-        
+
         if (this._watchQueue.length === 0) {
           queueList.innerHTML = '';
           queueEmpty.style.display = 'block';
@@ -7550,13 +7641,13 @@ FirebaseApp.initializeApp(options);</pre>
           playNextBtn.disabled = true;
           return;
         }
-        
+
         queueEmpty.style.display = 'none';
         playNextBtn.disabled = false;
-        
+
         const totalDuration = this._watchQueue.reduce((sum, item) => sum + (item.duration || 0), 0);
         queueSubtitle.textContent = `${this._watchQueue.length} vídeo(s) • ${this.formatDuration(totalDuration)}`;
-        
+
         queueList.innerHTML = this._watchQueue.map((item, index) => `
           <div class="queue-item ${index === 0 ? 'current' : ''}" onclick="app.playQueueItem(${index})">
             <img src="${item.thumbnail}" alt="${item.title}" class="queue-item-thumb"
@@ -7580,7 +7671,7 @@ FirebaseApp.initializeApp(options);</pre>
       updateQueueBadge() {
         const badge = document.getElementById('queueCountBadge');
         const count = this._watchQueue.length;
-        
+
         if (count > 0) {
           badge.textContent = count;
           badge.style.display = 'flex';
@@ -7594,7 +7685,7 @@ FirebaseApp.initializeApp(options);</pre>
         for (const category of this.categories) {
           const video = category.videos?.find(v => v.id === videoId);
           if (video) return video;
-          
+
           for (const subcategory of category.subcategories || []) {
             const subVideo = subcategory.videos?.find(v => v.id === videoId);
             if (subVideo) return subVideo;
@@ -7628,7 +7719,7 @@ FirebaseApp.initializeApp(options);</pre>
         const rect = e.target.getBoundingClientRect();
         const menuWidth = 220;
         const menuHeight = 300;
-        
+
         let left = e.clientX;
         let top = e.clientY;
 
@@ -7657,7 +7748,7 @@ FirebaseApp.initializeApp(options);</pre>
       generateContextMenuHTML(video) {
         // Filtra todas as categorias disponíveis (exceto a atual)
         const allAvailableCategories = [];
-        
+
         for (const category of this.categories) {
           // Categoria principal
           if (category.id !== this.currentCategory?.id) {
@@ -7668,7 +7759,7 @@ FirebaseApp.initializeApp(options);</pre>
               isSubcategory: false
             });
           }
-          
+
           // Subcategorias
           if (category.subcategories) {
             for (const subcategory of category.subcategories) {
@@ -7701,12 +7792,12 @@ FirebaseApp.initializeApp(options);</pre>
           `;
         } else {
           html += `<div class="context-menu-section-title">Mover para</div>`;
-          
+
           allAvailableCategories.forEach(category => {
             const icon = category.isSubcategory ? '📄' : '📁';
             const paddingLeft = category.isSubcategory ? '32px' : '16px';
             const displayName = category.isSubcategory ? `${category.parentName} › ${category.name}` : category.name;
-            
+
             html += `
               <div class="context-menu-item" data-category-id="${category.id}" style="padding-left: ${paddingLeft};">
                 <div class="context-menu-icon">${icon}</div>
@@ -7795,7 +7886,7 @@ FirebaseApp.initializeApp(options);</pre>
 
         // Remove o vídeo da categoria atual
         sourceCategory.videos = sourceCategory.videos.filter(v => v.id !== video.id);
-        
+
         // Adiciona na categoria de destino
         const newVideo = {
           ...video,
@@ -7819,10 +7910,10 @@ FirebaseApp.initializeApp(options);</pre>
       hideContextMenu() {
         const menu = document.getElementById('contextMenu');
         const overlay = document.querySelector('.context-menu-overlay');
-        
+
         if (menu) menu.remove();
         if (overlay) overlay.remove();
-        
+
         // Remove event listener
         if (this._contextMenuKeyHandler) {
           document.removeEventListener('keydown', this._contextMenuKeyHandler);
@@ -7957,22 +8048,22 @@ FirebaseApp.initializeApp(options);</pre>
         });
 
         // Atualiza o display com a duração total
-  const totalDisplay = modal ? modal.querySelector('#calculatorTotalTime') : document.getElementById('calculatorTotalTime');
+        const totalDisplay = modal ? modal.querySelector('#calculatorTotalTime') : document.getElementById('calculatorTotalTime');
         totalDisplay.textContent = this.formatDuration(totalDurationSeconds);
-        
+
         // Atualiza o título da seção com estatísticas
-  const sectionTitle = modal ? modal.querySelector('.section-title') : document.querySelector('.section-title');
+        const sectionTitle = modal ? modal.querySelector('.section-title') : document.querySelector('.section-title');
         if (selectedItems.length === 0) {
           sectionTitle.textContent = '📂 Escolha as Categorias';
         } else {
           sectionTitle.textContent = `📂 ${selectedItems.length} Categorias Selecionadas`;
         }
-        
+
         // Adiciona informação sobre vídeos não assistidos
-  const currentTotalInfo = modal ? modal.querySelector('.current-total-info') : document.querySelector('.current-total-info');
+        const currentTotalInfo = modal ? modal.querySelector('.current-total-info') : document.querySelector('.current-total-info');
         const existingSubtitle = currentTotalInfo.querySelector('.total-subtitle');
         if (existingSubtitle) existingSubtitle.remove();
-        
+
         if (selectedItems.length > 0) {
           const subtitle = document.createElement('div');
           subtitle.className = 'total-subtitle';
@@ -7992,16 +8083,16 @@ FirebaseApp.initializeApp(options);</pre>
       },
 
       setTargetDays(days) {
-  const modal = document.getElementById('timeCalculatorModal');
-  const input = modal ? modal.querySelector('#targetDaysInput') : document.getElementById('targetDaysInput');
-  input.value = days;
+        const modal = document.getElementById('timeCalculatorModal');
+        const input = modal ? modal.querySelector('#targetDaysInput') : document.getElementById('targetDaysInput');
+        input.value = days;
         this.calculateDailyTime();
       },
 
       calculateDailyTime() {
-  const modal = document.getElementById('timeCalculatorModal');
-  const targetDays = parseInt((modal ? modal.querySelector('#targetDaysInput') : document.getElementById('targetDaysInput')).value);
-  const resultDiv = modal ? modal.querySelector('#calculationResult') : document.getElementById('calculationResult');
+        const modal = document.getElementById('timeCalculatorModal');
+        const targetDays = parseInt((modal ? modal.querySelector('#targetDaysInput') : document.getElementById('targetDaysInput')).value);
+        const resultDiv = modal ? modal.querySelector('#calculationResult') : document.getElementById('calculationResult');
 
         if (!targetDays || targetDays <= 0) {
           resultDiv.style.display = 'none';
@@ -8009,11 +8100,11 @@ FirebaseApp.initializeApp(options);</pre>
         }
 
         // Calcula duração total das categorias selecionadas (apenas vídeos não assistidos)
-  const selectedItems = modal ? modal.querySelectorAll('.category-checkbox-item.selected') : document.querySelectorAll('.category-checkbox-item.selected');
+        const selectedItems = modal ? modal.querySelectorAll('.category-checkbox-item.selected') : document.querySelectorAll('.category-checkbox-item.selected');
         let totalDurationSeconds = 0;
         let totalVideos = 0;
         let unwatchedVideos = 0;
-        
+
         selectedItems.forEach(item => {
           const categoryId = item.dataset.categoryId;
           const category = this.findCategoryById(categoryId);
@@ -8057,13 +8148,13 @@ FirebaseApp.initializeApp(options);</pre>
         });
 
         // Atualiza UI
-  const q = (sel) => (modal ? modal.querySelector(sel) : document.querySelector(sel));
-  q('#dailyTimeResult').textContent = this.formatDuration(dailyTimeSeconds);
-  q('#weeklyTimeResult').textContent = this.formatDuration(weeklyTimeSeconds);
-  q('#resultDays').textContent = targetDays;
-  q('#completionDate').textContent = completionDateStr;
-  q('#selectedCategoriesCount').textContent = `${selectedItems.length} categorias`;
-  q('#remainingVideosCount').textContent = `${unwatchedVideos} vídeos`;
+        const q = (sel) => (modal ? modal.querySelector(sel) : document.querySelector(sel));
+        q('#dailyTimeResult').textContent = this.formatDuration(dailyTimeSeconds);
+        q('#weeklyTimeResult').textContent = this.formatDuration(weeklyTimeSeconds);
+        q('#resultDays').textContent = targetDays;
+        q('#completionDate').textContent = completionDateStr;
+        q('#selectedCategoriesCount').textContent = `${selectedItems.length} categorias`;
+        q('#remainingVideosCount').textContent = `${unwatchedVideos} vídeos`;
 
         // Mostra resultado com animação
         resultDiv.style.display = 'block';
@@ -8101,7 +8192,7 @@ FirebaseApp.initializeApp(options);</pre>
         document.getElementById('playlistPreview').style.display = 'none';
         document.getElementById('importPlaylistConfirm').disabled = true;
         this.openModal('importPlaylistModal');
-        
+
         // Adiciona listener para preview
         const input = document.getElementById('playlistUrlInput');
         input.oninput = () => this.previewPlaylist();
@@ -8110,7 +8201,7 @@ FirebaseApp.initializeApp(options);</pre>
       async previewPlaylist() {
         const url = document.getElementById('playlistUrlInput').value.trim();
         const playlistId = this.extractPlaylistId(url);
-        
+
         if (!playlistId) {
           document.getElementById('playlistPreview').style.display = 'none';
           document.getElementById('importPlaylistConfirm').disabled = true;
@@ -8137,7 +8228,7 @@ FirebaseApp.initializeApp(options);</pre>
           /[?&]list=([^#&?]*)/,
           /youtube\.com\/playlist\?list=([^#&?]*)/
         ];
-        
+
         for (const pattern of patterns) {
           const match = url.match(pattern);
           if (match && match[1]) return match[1];
@@ -8152,9 +8243,9 @@ FirebaseApp.initializeApp(options);</pre>
 
         const apiUrl = `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&id=${playlistId}&key=${this.settings.youtubeApiKey}`;
         const response = await fetch(apiUrl);
-        
+
         if (!response.ok) throw new Error('Erro ao buscar playlist');
-        
+
         const data = await response.json();
         if (data.items && data.items[0]) {
           const playlist = data.items[0];
@@ -8163,14 +8254,14 @@ FirebaseApp.initializeApp(options);</pre>
             videoCount: playlist.contentDetails.itemCount
           };
         }
-        
+
         return null;
       },
 
       async importPlaylist() {
         const url = document.getElementById('playlistUrlInput').value.trim();
         const playlistId = this.extractPlaylistId(url);
-        
+
         if (!playlistId) {
           this.showToast('URL de playlist inválido', 'error');
           return;
@@ -8189,7 +8280,7 @@ FirebaseApp.initializeApp(options);</pre>
 
         try {
           const videos = await this.fetchPlaylistVideos(playlistId);
-          
+
           if (videos.length === 0) {
             this.showToast('Nenhum vídeo encontrado na playlist', 'warning');
             return;
@@ -8197,10 +8288,10 @@ FirebaseApp.initializeApp(options);</pre>
 
           let added = 0;
           const existingIds = new Set(this.currentCategory.videos.map(v => v.id));
-          
+
           for (let i = 0; i < videos.length; i++) {
             const video = videos[i];
-            
+
             if (!existingIds.has(video.id)) {
               this.currentCategory.videos.push({
                 ...video,
@@ -8208,7 +8299,7 @@ FirebaseApp.initializeApp(options);</pre>
               });
               added++;
             }
-            
+
             this.updateProgress((i + 1) / videos.length * 100);
           }
 
@@ -8216,7 +8307,7 @@ FirebaseApp.initializeApp(options);</pre>
           this.saveData();
           this.renderVideos();
           this.renderCategories();
-          
+
           this.showToast(`${added} vídeos importados com sucesso!`, 'success');
         } catch (error) {
           console.error('Erro ao importar playlist:', error);
@@ -8230,20 +8321,20 @@ FirebaseApp.initializeApp(options);</pre>
       async fetchPlaylistVideos(playlistId) {
         const videos = [];
         let nextPageToken = '';
-        
+
         do {
           let apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=50&key=${this.settings.youtubeApiKey}`;
           if (nextPageToken) apiUrl += `&pageToken=${nextPageToken}`;
-          
+
           const response = await fetch(apiUrl);
           if (!response.ok) throw new Error('Erro ao buscar vídeos');
-          
+
           const data = await response.json();
-          
+
           for (const item of data.items) {
             const videoId = item.snippet.resourceId.videoId;
             const duration = await this.fetchVideoDuration(videoId);
-            
+
             videos.push({
               id: videoId,
               url: `https://www.youtube.com/watch?v=${videoId}`,
@@ -8260,10 +8351,10 @@ FirebaseApp.initializeApp(options);</pre>
               annotationsUpdatedAt: null
             });
           }
-          
+
           nextPageToken = data.nextPageToken || '';
         } while (nextPageToken && videos.length < 200);
-        
+
         return videos;
       },
 
@@ -8271,7 +8362,7 @@ FirebaseApp.initializeApp(options);</pre>
         try {
           const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${this.settings.youtubeApiKey}`;
           const response = await fetch(apiUrl);
-          
+
           if (response.ok) {
             const data = await response.json();
             if (data.items && data.items[0]) {
@@ -8455,12 +8546,12 @@ FirebaseApp.initializeApp(options);</pre>
         const json = JSON.stringify(data, null, 2);
         const blob = new Blob([json], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
-        
+
         const a = document.createElement('a');
         a.href = url;
         a.download = `youtube-hub-backup-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
-        
+
         URL.revokeObjectURL(url);
         this.showToast('Dados exportados com sucesso!', 'success');
       },
@@ -8473,7 +8564,7 @@ FirebaseApp.initializeApp(options);</pre>
         reader.onload = (e) => {
           try {
             const data = JSON.parse(e.target.result);
-            
+
             if (!data.categories) {
               throw new Error('Arquivo inválido');
             }
@@ -8485,7 +8576,7 @@ FirebaseApp.initializeApp(options);</pre>
                 this.categories = data.categories || [];
                 this.settings = data.settings || {};
                 this.currentCategory = null;
-                
+
                 this.saveData();
                 this.renderCategories();
                 this.renderVideos();
@@ -8499,7 +8590,7 @@ FirebaseApp.initializeApp(options);</pre>
             this.showToast('Erro ao importar arquivo', 'error');
           }
         };
-        
+
         reader.readAsText(file);
       },
 
@@ -8527,28 +8618,28 @@ FirebaseApp.initializeApp(options);</pre>
        */
       playVideoInModal(videoId, e) {
         if (e) e.stopPropagation();
-        
+
         const video = this.currentCategory?.videos.find(v => v.id === videoId);
         if (!video) return;
 
         // Atualizar propriedades do player para uso posterior
         this.currentPlayingVideo = video;
-        
+
         // Configurar título e metadados
         document.getElementById('playerVideoTitle').textContent = video.title;
         document.getElementById('playerVideoChannel').textContent = `Canal: ${video.channel || 'YouTube'}`;
         document.getElementById('playerVideoDuration').textContent = `Duração: ${this.formatDuration(video.duration)}`;
-        
+
         // Atualizar informações da fila
         this.updatePlayerQueueInfo(video);
-        
+
         // Mostrar loading
         document.getElementById('videoLoading').style.display = 'flex';
         document.getElementById('videoPlayerIframe').style.display = 'none';
-        
+
         // Abrir modal
         this.openVideoPlayer();
-        
+
         // Configurar iframe após um delay para garantir que o modal está aberto
         setTimeout(() => {
           this.loadVideoInPlayer(videoId);
@@ -8560,7 +8651,7 @@ FirebaseApp.initializeApp(options);</pre>
         if (modal) {
           modal.classList.add('active');
           document.body.style.overflow = 'hidden';
-          
+
           // Adicionar listener para fechar com Escape
           this.setupVideoPlayerKeyListeners();
         }
@@ -8569,21 +8660,21 @@ FirebaseApp.initializeApp(options);</pre>
       closeVideoPlayer() {
         const modal = document.getElementById('videoPlayerModal');
         const iframe = document.getElementById('videoPlayerIframe');
-        
+
         if (modal) {
           modal.classList.remove('active');
           document.body.style.overflow = '';
-          
+
           // Limpar iframe para parar o vídeo
           setTimeout(() => {
             iframe.src = '';
             iframe.style.display = 'none';
             document.getElementById('videoLoading').style.display = 'flex';
           }, 300);
-          
+
           // Limpar propriedades
           this.currentPlayingVideo = null;
-          
+
           // Remover listener de teclado
           this.removeVideoPlayerKeyListeners();
         }
@@ -8592,9 +8683,9 @@ FirebaseApp.initializeApp(options);</pre>
       loadVideoInPlayer(videoId) {
         const iframe = document.getElementById('videoPlayerIframe');
         const loading = document.getElementById('videoLoading');
-        
+
         // URL do YouTube para embed com parâmetros otimizados
-        const embedUrl = `https://www.youtube.com/embed/${videoId}?` + 
+        const embedUrl = `https://www.youtube.com/embed/${videoId}?` +
           'autoplay=1&' +          // Começar automaticamente
           'modestbranding=1&' +    // Reduzir branding do YouTube
           'rel=0&' +               // Não mostrar vídeos relacionados de outros canais
@@ -8605,13 +8696,13 @@ FirebaseApp.initializeApp(options);</pre>
           'enablejsapi=1';         // Habilita API JavaScript para detectar fim do vídeo
 
         iframe.src = embedUrl;
-        
+
         // Aguardar carregamento
         iframe.onload = () => {
           loading.style.display = 'none';
           iframe.style.display = 'block';
         };
-        
+
         // Fallback se não carregar em 5 segundos
         setTimeout(() => {
           if (iframe.style.display === 'none') {
@@ -8642,7 +8733,7 @@ FirebaseApp.initializeApp(options);</pre>
         const queueStatus = document.getElementById('queueStatus');
         const playNextBtn = document.getElementById('playNextFromPlayerBtn');
         const addCurrentBtn = document.getElementById('addCurrentToQueueBtn');
-        
+
         if (this._watchQueue.length > 0) {
           queueInfo.style.display = 'flex';
           const nextVideo = this._watchQueue[0];
@@ -8651,7 +8742,7 @@ FirebaseApp.initializeApp(options);</pre>
         } else {
           queueInfo.style.display = 'none';
         }
-        
+
         // Verifica se o vídeo atual já está na fila
         const isInQueue = this._watchQueue.some(item => item.videoId === currentVideo.id);
         addCurrentBtn.style.display = isInQueue ? 'none' : 'inline-flex';
@@ -8682,13 +8773,13 @@ FirebaseApp.initializeApp(options);</pre>
       markVideoAsWatched() {
         if (this.currentPlayingVideo) {
           this.toggleWatched(this.currentPlayingVideo.id);
-          
+
           // Atualizar texto do botão temporariamente
           const btn = document.getElementById('markWatchedBtn');
           const originalText = btn.innerHTML;
           btn.innerHTML = '✅ Marcado!';
           btn.disabled = true;
-          
+
           setTimeout(() => {
             btn.innerHTML = originalText;
             btn.disabled = false;
@@ -8699,13 +8790,13 @@ FirebaseApp.initializeApp(options);</pre>
       confirmAction(title, message, onConfirm) {
         document.getElementById('confirmTitle').textContent = title;
         document.getElementById('confirmMessage').textContent = message;
-        
+
         const btn = document.getElementById('confirmButton');
         btn.onclick = () => {
           this.closeModal('confirmModal');
           onConfirm();
         };
-        
+
         this.openModal('confirmModal');
       },
 
@@ -8725,14 +8816,14 @@ FirebaseApp.initializeApp(options);</pre>
       showToast(message, type = 'info') {
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
-        
+
         const icons = {
           success: '✅',
           error: '❌',
           warning: '⚠️',
           info: 'ℹ️'
         };
-        
+
         toast.innerHTML = `
           <span class="toast-icon">${icons[type]}</span>
           <span class="toast-message">${message}</span>
@@ -8816,4 +8907,5 @@ FirebaseApp.initializeApp(options);</pre>
     window.addEventListener('DOMContentLoaded', () => app.init());
   </script>
 </body>
+
 </html>
